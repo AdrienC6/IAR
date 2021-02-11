@@ -25,9 +25,31 @@
 		<div class="item">
 			<a href="">Déconnexion</a>
 		</div>
-		<div class="item-mobile">
-			<i class="fas fa-bars fa-2x"></i>
+		<div class="dropdown">
+			<button class="dropbtn">
+				<i class="fas fa-bars"></i>
+				| Menu
+			</button>
+			<div class="dropdown-content">
+				<a href="{{path('home')}}">Accueil</a>
+
+				<a href="">Editorial</a>
+
+				{% for c in categoryRepository.findAll() %}
+					<a href="{{path('category_show', {name : c.name})}}">{{c.name}}</a>
+				{% endfor %}
+
+
+				<a href="">Calendrier</a>
+
+				<a href="">Archives</a>
+
+				<a href="">Déconnexion</a>
+
+
+			</div>
 		</div>
+
 
 	</div>
 
