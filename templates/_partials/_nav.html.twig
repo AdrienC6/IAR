@@ -6,18 +6,11 @@
 		<div class="item">
 			<a href="">Editorial</a>
 		</div>
-		<div class="item">
-			<a href="">France</a>
-		</div>
-		<div class="item">
-			<a href="">International</a>
-		</div>
-		<div class="item">
-			<a href="">Modes Opératoires</a>
-		</div>
-		<div class="item">
-			<a href="">Autres</a>
-		</div>
+		{% for c in categoryRepository.findAll() %}
+			<div class="item">
+				<a href="">{{c.name}}</a>
+			</div>
+		{% endfor %}
 		<div class="item">
 			<a href="">Calendrier</a>
 		</div>
@@ -27,5 +20,11 @@
 		<div class="item">
 			<a href="">Déconnexion</a>
 		</div>
+		<div class="item-mobile">
+			<i class="fas fa-bars fa-2x"></i>
+		</div>
+
 	</div>
+
+
 </nav>
