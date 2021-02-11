@@ -1,3 +1,8 @@
+<div class="admin-bar">
+	<a href="" class="admin-bar-item">Tableau de bord</a>
+	<a href="" class="admin-bar-item">Déconnexion</a>
+	<a href="{{path('article_add')}}" class="admin-bar-item">Nouvel Article</a>
+</div>
 <nav>
 	<div class="items">
 		<div class="item">
@@ -8,7 +13,7 @@
 		</div>
 		{% for c in categoryRepository.findAll() %}
 			<div class="item">
-				<a href="">{{c.name}}</a>
+				<a href="{{path('category_show', {name : c.name})}}">{{c.name}}</a>
 			</div>
 		{% endfor %}
 		<div class="item">

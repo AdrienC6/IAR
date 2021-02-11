@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}
+	Nouvel Article
+{% endblock %}
+
+{% block body %}
+	<div class="title">
+		<h1>Nouvel Article</h1>
+	</div>
+
+
+	<div class="form">
+		{{ form_start(form) }}
+
+		<div class="form-item">
+			{{form_label(form.title, 'Titre')}}
+			{{form_errors(form.title, {'attr':{'class':'form-error'}})}}
+			{{ form_widget(form.title, {'attr': {'class': 'form-field'}})}}
+
+		</div>
+		<div class="form-item">{{form_label(form.text, 'Contenu')}}
+			{{ form_widget(form.text, {'attr': {'class': 'form-field', 'rows':'7'}})}}</div>
+
+		<div class="form-item">{{form_label(form.category, 'Catégorie(s)')}}
+			{{ form_widget(form.category, {'attr': {'class': 'form-field form-choice'}}) }}</div>
+
+		<div class="form-item">{{form_label(form.Tag, 'Etiquette(s)')}}
+			{{ form_widget(form.Tag, {'attr': {'class': 'form-field form-choice'}}) }}</div>
+
+		<button type="submit" class="button" formnovalidate>Publier</button>
+
+		{{ form_end(form) }}
+
+	</div>
+{% endblock %}

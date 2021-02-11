@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Nouvelle Catégorie
+{% endblock %}
+
+{% block body %}
+	<div class="title">
+		<h1>Nouvelle Catégorie</h1>
+	</div>
+
+	<div class="form">
+		{{ form_start(form) }}
+
+		<div class="form-item">
+			{{form_label(form.name, 'Nom')}}
+			{{form_errors(form.name, {'attr':{'class':'form-error'}})}}
+			{{ form_widget(form.name, {'attr': {'class': 'form-field'}})}}
+
+		</div>
+
+		<button type="submit" class="button" formnovalidate>Publier</button>
+
+
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

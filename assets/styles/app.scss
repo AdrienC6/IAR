@@ -29,11 +29,7 @@ body {
             padding : 20px 20px;
             border-bottom : 2px solid #EC6436;
             &:hover {
-                border-bottom : 3px solid #fff;
-                padding : 21px 40px;
-                a {
-                    font-size : 1.1rem;
-                }
+                border-bottom : 3px solid #fff;                
             }
             a {
                 color : #fff;
@@ -69,10 +65,11 @@ body {
             line-height: 25px;
         }
         .homepage-pic {
-            width : 50%;
+            width : 40%;
             margin : 5% auto;
             img {
                 width : 100%;
+                margin : auto;
             }
         }
     }
@@ -102,5 +99,91 @@ body {
             }
         }
     }
+
+    .title {
+        text-align : center;
+        color : #fff;
+        background : #EC6436;
+        padding : 20px 0;
+    }
+
+    .article-card {
+        background : #fff;
+        width : 80%;
+        margin : 2% auto;
+        padding : 15px;
+        .article-date {
+            background : #EC6436;
+            color : #fff;
+            font-weight : bolder;
+            width : 25%;
+            text-align: center;
+            padding : 5px 0;
+        }
+        .article-category {
+            color : #EC6436;
+            font-weight : bolder;
+            text-decoration: none;
+        }
+        .article-tag {
+            font-size : 10px;
+        }
+    }
+    .form {
+        width : 80%;
+        margin : auto;
+        background : #fff;
+        padding : 30px 0 0;
+        display : flex;
+        flex-direction: column;
+        justify-content: center;
+        margin : 5% auto;
+        .form-item {
+            display : flex;
+            flex-direction: column;
+            width : 90%;
+            margin : 0 auto 30px;
+            justify-content: space-evenly;
+            .form-field {
+                margin : 10px auto 0;
+                width : 100%;
+                border-radius : 5px;
+                border : 1px solid lightgray;
+            }
+            .form-choice{
+                border : none;
+                label {
+                    color : #4C4C4C;
+                    font-size : 12px;
+                }
+            }
+        }
+        .button{
+        width : 100%;
+        text-align : center;
+        color : #fff;
+        background-color: #EC6436;
+        border : none;
+        outline : none;
+        padding : 10px 0;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    }
+    label {
+        padding : 0 10px;
+    }
+    .admin-bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        a {
+            color : #fff;
+            text-decoration: none;
+           
+        }
+    }
+    
 }
 

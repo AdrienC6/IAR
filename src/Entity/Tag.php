@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,9 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ORM\Entity(repositoryClass=TagRepository::class)
  */
-class Category
+class Tag
 {
     /**
      * @ORM\Id
@@ -23,12 +23,12 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Veuillez indiquer le nom de la nouvelle catégorie")
+     * @Assert\NotBlank(message="Veuillez indiquer le nom de la nouvelle étiquette")
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="Tag")
      */
     private $articles;
 
@@ -66,7 +66,7 @@ class Category
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->addCategory($this);
+            $article->addTag($this);
         }
 
         return $this;
@@ -75,7 +75,7 @@ class Category
     public function removeArticle(Article $article): self
     {
         if ($this->articles->removeElement($article)) {
-            $article->removeCategory($this);
+            $article->removeTag($this);
         }
 
         return $this;
