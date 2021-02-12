@@ -23,6 +23,9 @@
 		<div class="form-item">{{form_label(form.text, 'Contenu')}}
 			{{ form_widget(form.text, {'attr': {'class': 'form-field', 'rows':'7'}})}}</div>
 
+		<div class="form-item">{{form_label(form.twitter, 'Tweet (URL)')}}
+			{{ form_widget(form.twitter, {'attr': {'class': 'form-field'}})}}</div>
+
 		<div class="form-item">{{form_label(form.category, 'Catégorie(s)')}}
 			{{ form_widget(form.category, {'attr': {'class': 'form-field form-choice'}}) }}</div>
 

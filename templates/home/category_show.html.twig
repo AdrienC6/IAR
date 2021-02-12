@@ -5,35 +5,58 @@
 {% endblock %}
 
 {% block body %}
-	<div class="title">
-		<h1>{{category.name}}</h1>
-	</div>
+<div class="title">
+	<h1>{{category.name}}</h1>
+</div>
 
-	{% for article in articles %}
-		<div class="article-card">
-			<p class="article-date">
-				{{article.createdAt|date('d/m/Y')}}</p>
-			<p>Catégorie(s) :
-				{% for category in article %}
-					<a href="{{path('category_show', {name: category.name})}}" class="article-category">|
-						{{category.name}}
-					</a>
-				{% endfor %}
-			</p>
-			{% if article.tag|length > 0 %}
-				<p class="article-tag">Etiquette(s) :
-					{% for tag in article.tag %}
-						<a href="#" class="article-category">|
-							{{tag.name}}
+<div class="category-container">
+	<div class="articles">
+		{% for article in articles %}
+			<div class="article-card">
+				<p class="article-date">
+					{{article.createdAt|date('d/m/Y')}}</p>
+				<p>Catégorie(s) :
+					{% for category in article.category %}
+						<a href="{{path('category_show', {name: category.name})}}" class="article-category">|
+							{{category.name}}
 						</a>
 					{% endfor %}
 				</p>
+				{% if article.tag|length > 0 %}
+					<p class="article-tag">Etiquette(s) :
+						{% for tag in article.tag %}
+							<a href="#" class="article-category">|
+								{{tag.name}}
+							</a>
+						{% endfor %}
+					</p>
 
-			{% endif %}
+				{% endif %}
 
-			<h2>{{article.title}}</h2>
-			<p>{{article.text}}</p>
+				<h2>{{article.title}}</h2>
+				{% if article.twitter|length > 0 %}
+					<blockquote class="twitter-tweet">
+						<a href="{{article.twitter}}}"></a>
+					</blockquote>
+				{% endif %}
+				<p>{{article.text}}</p>
 
+
+			</div>
+		{% endfor %}
+
+	</div>
+	<div class="category-tools">
+		<div class="tags">
+			<h3 class="tools-title">Index</h3>
+			{% for tag in tags %}
+				<a href="#" class="tags-item">{{tag.name}}</a>
+			{% endfor %}
 		</div>
-	{% endfor %}
-{% endblock %}
+		<div class="search"></div>
+	</div>
+
+</div>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
+	{% endblock %}

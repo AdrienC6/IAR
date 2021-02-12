@@ -27,6 +27,9 @@ class ArticleType extends AbstractType
             ->add('text', TextareaType::class, [
                 'label' => 'Contenu'
             ])
+            ->add('twitter', TextType::class, [
+                'label' => 'Tweet'
+            ])
 
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie(s)',

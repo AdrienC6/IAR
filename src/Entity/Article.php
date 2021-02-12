@@ -48,6 +48,11 @@ class Article
      */
     private $Tag;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $twitter;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -141,6 +146,18 @@ class Article
     public function removeTag(Tag $tag): self
     {
         $this->Tag->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getTwitter(): ?string
+    {
+        return $this->twitter;
+    }
+
+    public function setTwitter(?string $twitter): self
+    {
+        $this->twitter = $twitter;
 
         return $this;
     }

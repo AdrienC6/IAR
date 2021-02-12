@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\ORM\Query\FilterCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,17 +24,19 @@ class HomeController extends AbstractController
     /**
      * @Route("/{name}", name="category_show")
      */
-    public function categoryShow(CategoryRepository $categoryRepository, $name, ArticleRepository $articleRepository): Response
+    public function categoryShow(CategoryRepository $categoryRepository, $name, TagRepository $tagRepository): Response
     {
         $category = $categoryRepository->findOneBy(['name' => $name]);
-        $articles = $category->getArticles();
-        $t = $articles->toArray();
-        $m = array_reverse($t);
+        $categoryArticles = $category->getArticles();
+        $array = $categoryArticles->toArray();
+        $articles = array_reverse($array);
+        $tags = $tagRepository->findAll();
         // dd($t);
 
         return $this->render('home/category_show.html.twig', [
             'category' => $category,
-            'articles' => $m
+            'articles' => $articles,
+            'tags' => $tags
         ]);
     }
 }
