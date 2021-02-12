@@ -1,12 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	{{category.name}}
+	{{tag.name}}
 {% endblock %}
 
 {% block body %}
 <div class="title">
-	<h1>{{category.name}}</h1>
+	<h1>{{tag.name}}</h1>
 </div>
 
 <div class="category-container">
@@ -47,7 +47,6 @@
 		{% if articles|length < 1 %}
 			<h2 style="text-align">Aucun article pour le moment</h2>
 		{% endif %}
-
 
 	</div>
 	<div class="category-tools">

@@ -27,6 +27,9 @@ class HomeController extends AbstractController
     public function categoryShow(CategoryRepository $categoryRepository, $name, TagRepository $tagRepository): Response
     {
         $category = $categoryRepository->findOneBy(['name' => $name]);
+        if (!$category) {
+            throw $this->createNotFoundException("La catégorie demandée n'existe pas...");
+        }
         $categoryArticles = $category->getArticles();
         $array = $categoryArticles->toArray();
         $articles = array_reverse($array);
@@ -35,6 +38,27 @@ class HomeController extends AbstractController
 
         return $this->render('home/category_show.html.twig', [
             'category' => $category,
+            'articles' => $articles,
+            'tags' => $tags
+        ]);
+    }
+
+    /**
+     * @Route("/tag/{name}", name="tag_show")
+     */
+    public function tagShow(TagRepository $tagRepository, $name): Response
+    {
+        $tag = $tagRepository->findOneBy(['name' => $name]);
+        if (!$tag) {
+            throw $this->createNotFoundException("L'étiquette demandée n'existe pas...");
+        }
+        $tagArticles = $tag->getArticles();
+        $array = $tagArticles->toArray();
+        $articles = array_reverse($array);
+        $tags = $tagRepository->findAll();
+
+        return $this->render('home/tag_show.html.twig', [
+            'tag' => $tag,
             'articles' => $articles,
             'tags' => $tags
         ]);
