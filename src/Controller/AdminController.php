@@ -8,6 +8,7 @@ use App\Entity\Tag;
 use App\Form\ArticleType;
 use App\Form\CategoryType;
 use App\Form\TagType;
+use App\Repository\ArticleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,16 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    /**
-     * @Route("/admin", name="admin")
-     */
-    public function index(): Response
-    {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
     /**
      * @Route("/admin/article/nouveau", name="article_add")
      */
@@ -48,41 +39,14 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/categorie/nouvelle", name="category_add")
+     * @Route("/admin/articles/tous", name="article_all")
      */
-    public function categoryAdd(Request $request, EntityManagerInterface $em): Response
+    public function articleIndex(ArticleRepository $articleRepository): Response
     {
-        $category = new Category;
+        $articles = $articleRepository->findAll();
 
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($category);
-            $em->flush();
-        }
-
-        return $this->render("admin/category_add.html.twig", [
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/admin/tag/nouveau", name="tag_add")
-     */
-    public function tagAdd(Request $request, EntityManagerInterface $em): Response
-    {
-        $tag = new Tag;
-
-        $form = $this->createForm(TagType::class, $tag);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($tag);
-            $em->flush();
-        }
-        return $this->render("admin/tag_add.html.twig", [
-            'form' => $form->createView()
+        return $this->render("admin/article_all.html.twig", [
+            'articles' => $articles
         ]);
     }
 }

@@ -1,7 +1,6 @@
 {# DO THIS: the '!' symbol tells Symfony to extend from the original template #}
-{% block stylesheet %}
-	<link rel="stylesheet" href="/article_add.css">
-{% endblock %}
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
 {% block body %}
 	<div class="wrapper">
 		<header class="main-header">
@@ -58,60 +57,8 @@
 				</ul>
 			</section>
 		</aside>
-		<div class="content-wrapper">
-			<div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
-			<div class="content">
-				<section class="content-header">
-					<div class="d-flex flex-row justify-content-between align-content-center w-100">
-						<div class="content-header-title">
-							<h1 class="title">
-								INFOACTIVISME-RECHERCHE
-							</h1>
-						</div>
-
-						<div class="page-actions"></div>
-					</div>
-				</section>
-
-				<section id="main">
-					<div class="content-panel">
-						<div class="content-panel-body without-header without-footer">
-							<div class="form">
-								{{ form_start(form) }}
-
-								<div class="form-item">
-									{{form_label(form.title, 'Titre')}}
-									{{form_errors(form.title, {'attr':{'class':'form-error'}})}}
-									{{ form_widget(form.title, {'attr': {'class': 'form-field'}})}}
-
-								</div>
-								<div class="form-item">{{form_label(form.text, 'Contenu')}}
-									{{ form_widget(form.text, {'attr': {'class': 'form-field', 'rows':'7'}})}}</div>
-
-								<div class="field-urls">
-									<div class="form-item">{{form_label(form.twitter, 'Tweet (URL)')}}
-										{{ form_widget(form.twitter, {'attr': {'class': 'form-field'}})}}</div>
-
-									<div class="form-item">
-										{{form_label(form.facebook, 'Post Facebook (URL)')}}
-										{{ form_widget(form.facebook, {'attr': {'class': 'form-field'}})}}</div>
-								</div>
-
-								<div class="form-item">{{form_label(form.category, 'Catégorie(s)')}}
-									{{ form_widget(form.category, {'attr': {'class': 'form-field form-choice'}}) }}</div>
-
-								<div class="form-item">{{form_label(form.Tag, 'Etiquette(s)')}}
-									{{ form_widget(form.Tag, {'attr': {'class': 'form-field form-choice'}}) }}</div>
-
-								<button type="submit" class="button" formnovalidate>Publier</button>
-
-								{{ form_end(form) }}
-
-							</div>
-						</div>
-					</div>
-				</section>
-			</div>
+		<div>
+			<img src="{{asset('/images/logotest.png')}}" style=" width:50%; margin:auto; filter:brightness(30%)">
 		</div>
 	</div>
 

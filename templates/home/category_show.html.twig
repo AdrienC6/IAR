@@ -66,7 +66,7 @@
 			</div>
 			<div class="search">
 				<h4>Recherche</h4>
-				<form action="">
+				<form action="#" method="GET">
 					<div class="form-item">
 						<input type="text" class="" name="text" placeholder="Texte">
 					</div>
@@ -76,7 +76,7 @@
 					<div class="form-item">
 						<select name="category">
 
-							<option value="null">--Catégorie--</option>
+							<option value="all">--Catégorie--</option>
 							{% for category in categories %}
 								<option value="{{category.name}}">{{category.name}}</option>
 							{% endfor %}
@@ -85,7 +85,7 @@
 
 					<div class="form-item">
 						<select name="tag">
-							<option value="null">--Etiquette--</option>
+							<option value="all">--Etiquette--</option>
 							{% for tag in tags %}
 								<option value="{{tag.name}}">{{tag.name}}</option>
 							{% endfor %}

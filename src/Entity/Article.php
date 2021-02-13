@@ -32,21 +32,11 @@ class Article
      */
     private $text;
 
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created_at;
-
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="articles")
      */
     private $category;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="articles")
-     */
-    private $Tag;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -57,6 +47,18 @@ class Article
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $facebook;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="articles")
+     */
+    private $Tag;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+
 
     public function __construct()
     {
@@ -93,20 +95,6 @@ class Article
         return $this;
     }
 
-
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Category[]
      */
@@ -127,6 +115,30 @@ class Article
     public function removeCategory(Category $category): self
     {
         $this->category->removeElement($category);
+
+        return $this;
+    }
+
+    public function getTwitter(): ?string
+    {
+        return $this->twitter;
+    }
+
+    public function setTwitter(?string $twitter): self
+    {
+        $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    public function getFacebook(): ?string
+    {
+        return $this->facebook;
+    }
+
+    public function setFacebook(?string $facebook): self
+    {
+        $this->facebook = $facebook;
 
         return $this;
     }
@@ -155,26 +167,14 @@ class Article
         return $this;
     }
 
-    public function getTwitter(): ?string
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->twitter;
+        return $this->created_at;
     }
 
-    public function setTwitter(?string $twitter): self
+    public function setCreatedAt(\DateTimeInterface $created_at): self
     {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook(?string $facebook): self
-    {
-        $this->facebook = $facebook;
+        $this->created_at = $created_at;
 
         return $this;
     }
