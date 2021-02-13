@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,8 +28,11 @@ class ArticleType extends AbstractType
             ->add('text', TextareaType::class, [
                 'label' => 'Contenu'
             ])
-            ->add('twitter', TextType::class, [
+            ->add('twitter', UrlType::class, [
                 'label' => 'Tweet'
+            ])
+            ->add('facebook', UrlType::class, [
+                'label' => 'Post Facebook'
             ])
 
             ->add('category', EntityType::class, [

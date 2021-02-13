@@ -33,13 +33,16 @@ class HomeController extends AbstractController
         $categoryArticles = $category->getArticles();
         $array = $categoryArticles->toArray();
         $articles = array_reverse($array);
+
         $tags = $tagRepository->findAll();
-        // dd($t);
+
+        $categories = $categoryRepository->findAll();
 
         return $this->render('home/category_show.html.twig', [
             'category' => $category,
             'articles' => $articles,
-            'tags' => $tags
+            'tags' => $tags,
+            'categories' => $categories
         ]);
     }
 

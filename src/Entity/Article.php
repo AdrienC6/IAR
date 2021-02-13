@@ -53,6 +53,11 @@ class Article
      */
     private $twitter;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $facebook;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -158,6 +163,18 @@ class Article
     public function setTwitter(?string $twitter): self
     {
         $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    public function getFacebook(): ?string
+    {
+        return $this->facebook;
+    }
+
+    public function setFacebook(?string $facebook): self
+    {
+        $this->facebook = $facebook;
 
         return $this;
     }

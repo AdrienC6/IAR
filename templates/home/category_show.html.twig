@@ -5,62 +5,102 @@
 {% endblock %}
 
 {% block body %}
-<div class="title">
-	<h1>{{category.name}}</h1>
-</div>
+	<div class="title">
+		<h1>{{category.name}}</h1>
+	</div>
 
-<div class="category-container">
-	<div class="articles">
-		{% for article in articles %}
-			<div class="article-card">
-				<p class="article-date">
-					{{article.createdAt|date('d/m/Y')}}</p>
-				<p>Catégorie(s) :
-					{% for category in article.category %}
-						<a href="{{path('category_show', {name: category.name})}}" class="article-category">|
-							{{category.name}}
-						</a>
-					{% endfor %}
-				</p>
-				{% if article.tag|length > 0 %}
-					<p class="article-tag">Etiquette(s) :
-						{% for tag in article.tag %}
-							<a href="#" class="article-category">|
-								{{tag.name}}
+	<div class="category-container">
+		<div class="articles">
+			{% for article in articles %}
+				<div class="article-card">
+					<p class="article-date">
+						{{article.createdAt|date('d/m/Y')}}</p>
+					<p>Catégorie(s) :
+						{% for category in article.category %}
+							<a href="{{path('category_show', {name: category.name})}}" class="article-category">|
+								{{category.name}}
 							</a>
 						{% endfor %}
 					</p>
+					{% if article.tag|length > 0 %}
+						<p class="article-tag">Etiquette(s) :
+							{% for tag in article.tag %}
+								<a href="#" class="article-category">|
+									{{tag.name}}
+								</a>
+							{% endfor %}
+						</p>
 
-				{% endif %}
+					{% endif %}
 
-				<h2>{{article.title}}</h2>
-				{% if article.twitter|length > 0 %}
-					<blockquote class="twitter-tweet">
-						<a href="{{article.twitter}}}"></a>
-					</blockquote>
-				{% endif %}
-				<p>{{article.text}}</p>
+					<h2>{{article.title}}</h2>
+					{% if article.twitter|length > 0 %}
+						<blockquote class="twitter-tweet">
+							<a href="{{article.twitter}}}"></a>
+						</blockquote>
+					{% endif %}
+					{% if article.facebook|length > 0 %}
+						<div class="fb-post" data-href="{{article.facebook}}" data-width="500" data-show-text="true">
+							<blockquote cite="{{article.facebook}}" class="fb-xfbml-parse-ignore"></blockquote>
+						</div>
+						<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v9.0" nonce="OgdAFtEq"></script>
+					{% endif %}
+
+					<p>{{article.text}}</p>
 
 
-			</div>
-		{% endfor %}
-		{% if articles|length < 1 %}
-			<h2 style="text-align">Aucun article pour le moment</h2>
-		{% endif %}
-
-
-	</div>
-	<div class="category-tools">
-		<div class="tags">
-			<h3 class="tools-title">Index</h3>
-			{% for tag in tags %}
-				<a href="{{path('tag_show', {name:tag.name})}}" class="tags-item">{{tag.name}}</a>
+				</div>
 			{% endfor %}
+			{% if articles|length < 1 %}
+				<h2 style="text-align">Aucun article pour le moment</h2>
+			{% endif %}
+
+
 		</div>
-		<div class="search"></div>
+		<div class="widgets">
+			<div class="index">
+				<h4>Index</h4>
+				{% for tag in tags %}
+					<a href="{{path('tag_show', {name: tag.name})}}" class="tag-link">{{tag.name}}</a>
+				{% endfor %}
+			</div>
+			<div class="search">
+				<h4>Recherche</h4>
+				<form action="">
+					<div class="form-item">
+						<input type="text" class="" name="text" placeholder="Texte">
+					</div>
+					<div class="form-item">
+						<input type="date" class="" name="date">
+					</div>
+					<div class="form-item">
+						<select name="category">
+
+							<option value="null">--Catégorie--</option>
+							{% for category in categories %}
+								<option value="{{category.name}}">{{category.name}}</option>
+							{% endfor %}
+						</select>
+					</div>
+
+					<div class="form-item">
+						<select name="tag">
+							<option value="null">--Etiquette--</option>
+							{% for tag in tags %}
+								<option value="{{tag.name}}">{{tag.name}}</option>
+							{% endfor %}
+						</select>
+
+					</div>
+					<button type="submit">Rechercher</button>
+				</form>
+			</div>
+		</div>
 	</div>
 
 </div>
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
-	{% endblock %}
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v9.0" nonce="OgdAFtEq"></script>
+
+{% endblock %}
