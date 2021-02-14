@@ -1,8 +1,13 @@
-<div class="admin-bar">
-	<a href="" class="admin-bar-item">Tableau de bord</a>
-	<a href="" class="admin-bar-item">Déconnexion</a>
-	<a href="{{path('admin')}}" class="admin-bar-item">Dashboard</a>
-</div>
+{% for role in app.user.roles %}
+	{% if role is same as ("ROLE_ADMIN") %}
+		<div class="admin-bar">
+			<a href="{{path('admin')}}" class="admin-bar-item">Dashboard</a>
+			<a href="{{path('app_logout')}}" class="admin-bar-item">Déconnexion</a>
+		</div>
+
+	{% endif %}
+{% endfor %}
+
 <nav>
 	<div class="items">
 		<div class="item">
@@ -23,7 +28,7 @@
 			<a href="">Archives</a>
 		</div>
 		<div class="item">
-			<a href="">Déconnexion</a>
+			<a href="{{path('app_logout')}}">Déconnexion</a>
 		</div>
 		<div class="dropdown">
 			<button class="dropbtn">

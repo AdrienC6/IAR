@@ -34,11 +34,8 @@
 				{% endif %}
 
 				<h2>{{article.title}}</h2>
-				{% if article.twitter|length > 0 %}
-					<blockquote class="twitter-tweet">
-						<a href="{{article.twitter}}}"></a>
-					</blockquote>
-				{% endif %}
+				{% include "_partials/_twitter.html.twig" %}
+				{% include "_partials/_facebook.html.twig" %}
 				<p>{{article.text}}</p>
 
 
@@ -49,15 +46,46 @@
 		{% endif %}
 
 	</div>
-	<div class="category-tools">
-		<div class="tags">
-			<h3 class="tools-title">Index</h3>
+	<div class="widgets">
+		<div class="index">
+			<h4>Index</h4>
 			{% for tag in tags %}
-				<a href="{{path('tag_show', {name:tag.name})}}" class="tags-item">{{tag.name}}</a>
+				<a href="{{path('tag_show', {name: tag.name})}}" class="tag-link">{{tag.name}}</a>
 			{% endfor %}
 		</div>
-		<div class="search"></div>
+		<div class="search">
+			<h4>Recherche</h4>
+			<form action="#" method="GET">
+				<div class="form-item">
+					<input type="text" class="" name="text" placeholder="Texte">
+				</div>
+				<div class="form-item">
+					<input type="date" class="" name="date">
+				</div>
+				<div class="form-item">
+					<select name="category">
+
+						<option value="all">--Catégorie--</option>
+						{% for category in categories %}
+							<option value="{{category.name}}">{{category.name}}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+				<div class="form-item">
+					<select name="tag">
+						<option value="all">--Etiquette--</option>
+						{% for tag in tags %}
+							<option value="{{tag.name}}">{{tag.name}}</option>
+						{% endfor %}
+					</select>
+
+				</div>
+				<button type="submit">Rechercher</button>
+			</form>
+		</div>
 	</div>
+
 
 </div>
 

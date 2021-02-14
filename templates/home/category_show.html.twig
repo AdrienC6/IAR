@@ -25,7 +25,7 @@
 					{% if article.tag|length > 0 %}
 						<p class="article-tag">Etiquette(s) :
 							{% for tag in article.tag %}
-								<a href="#" class="article-category">|
+								<a href="{{path('tag_show', {name: tag.name})}}" class="article-category">|
 									{{tag.name}}
 								</a>
 							{% endfor %}
@@ -34,18 +34,8 @@
 					{% endif %}
 
 					<h2>{{article.title}}</h2>
-					{% if article.twitter|length > 0 %}
-						<blockquote class="twitter-tweet">
-							<a href="{{article.twitter}}}"></a>
-						</blockquote>
-					{% endif %}
-					{% if article.facebook|length > 0 %}
-						<div class="fb-post" data-href="{{article.facebook}}" data-width="500" data-show-text="true">
-							<blockquote cite="{{article.facebook}}" class="fb-xfbml-parse-ignore"></blockquote>
-						</div>
-						<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v9.0" nonce="OgdAFtEq"></script>
-					{% endif %}
-
+					{% include "_partials/_twitter.html.twig" %}
+					{% include "_partials/_facebook.html.twig" %}
 					<p>{{article.text}}</p>
 
 

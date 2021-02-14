@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
-use DateTime;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class HomeController extends AbstractController
 {
@@ -18,6 +17,10 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
         return $this->render('home/index.html.twig');
     }
 
@@ -26,6 +29,12 @@ class HomeController extends AbstractController
      */
     public function categoryShow(CategoryRepository $categoryRepository, $name, TagRepository $tagRepository): Response
     {
+
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $category = $categoryRepository->findOneBy(['name' => $name]);
         if (!$category) {
             throw $this->createNotFoundException("La catégorie demandée n'existe pas...");
@@ -49,8 +58,13 @@ class HomeController extends AbstractController
     /**
      * @Route("/tag/{name}", name="tag_show")
      */
-    public function tagShow(TagRepository $tagRepository, $name): Response
+    public function tagShow(TagRepository $tagRepository, $name, CategoryRepository $categoryRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $tag = $tagRepository->findOneBy(['name' => $name]);
         if (!$tag) {
             throw $this->createNotFoundException("L'étiquette demandée n'existe pas...");
@@ -58,12 +72,17 @@ class HomeController extends AbstractController
         $tagArticles = $tag->getArticles();
         $array = $tagArticles->toArray();
         $articles = array_reverse($array);
+
         $tags = $tagRepository->findAll();
+
+        $categories = $categoryRepository->findAll();
+
 
         return $this->render('home/tag_show.html.twig', [
             'tag' => $tag,
             'articles' => $articles,
-            'tags' => $tags
+            'tags' => $tags,
+            'categories' => $categories
         ]);
     }
 }
