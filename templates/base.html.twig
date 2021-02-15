@@ -6,8 +6,7 @@
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
-		{# Run `composer require symfony/webpack-encore-bundle`
-																						           and uncomment the following Encore helpers to start using Symfony UX #}
+
 		{% block stylesheets %}
 			<script src="https://kit.fontawesome.com/f83f06d8bc.js" crossorigin="anonymous"></script>
 			<link rel="stylesheet" href="/build/app.css">
@@ -20,7 +19,9 @@
 		{% include "_partials/_footer.html.twig" %}
 
 		{% block javascripts %}
-			{#{{ encore_entry_script_tags('app') }}#}
+			<script src="/search.js"></script>
+
+
 		{% endblock %}
 
 	</body>

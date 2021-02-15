@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
@@ -24,23 +25,33 @@ class SearchContentType extends AbstractType
                 ]
             ])
             ->add('category', EntityType::class, [
+                'label' => false,
                 'class' => Category::class,
                 'attr' => [
                     'required' => false
                 ],
-                'placeholder' => 'Catégorie'
+                'placeholder' => '--Catégorie--'
             ])
-            ->add('Rechercher', SubmitType::class, [
+            ->add('tag', EntityType::class, [
+                'label' => false,
+                'class' => Tag::class,
                 'attr' => [
-                    'formnovalidate' => 'formnovalidate'
-                ]
-            ]);
+                    'required' => false
+                ],
+                'placeholder' => '--Etiquette--'
+            ])
+            // ->add('Rechercher', SubmitType::class, [
+            //     'attr' => [
+            //         'formnovalidate' => 'formnovalidate'
+            //     ]
+            // ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'attr' => ['id' => 'searchForm']
         ]);
     }
 }

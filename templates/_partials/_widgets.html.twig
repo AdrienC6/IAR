@@ -1,0 +1,76 @@
+<div class="category-container">
+	<div class="articles">
+		{% for article in articles %}
+			<div class="article-card">
+				<p class="article-date">
+					{{article.createdAt|date('d/m/Y')}}</p>
+				<p class="article-category">Catégorie(s) :
+					{% for category in article.category %}
+						<a href="{{path('category_show', {name: category.name})}}" class="article-category">|
+							{{category.name}}
+						</a>
+					{% endfor %}
+				</p>
+				{% if article.tag|length > 0 %}
+					<p class="article-tag">Etiquette(s) :
+						{% for tag in article.tag %}
+							<a href="{{path('tag_show', {name: tag.name})}}" class="tags">|
+								{{tag.name}}
+							</a>
+						{% endfor %}
+					</p>
+				{% endif %}
+				<h2>{{article.title}}</h2>
+				{% include "_partials/_twitter.html.twig" %}
+				{% include "_partials/_facebook.html.twig" %}
+				<p>{{article.text}}</p>
+			</div>
+		{% endfor %}
+		{% if articles|length < 1 %}
+			<h2 style="text-align">Aucun article pour le moment</h2>
+		{% endif %}
+	</div>
+	<div class="widgets">
+		<div class="index">
+			<h4>Index</h4>
+			{% for tag in tags %}
+				<a href="{{path('tag_show', {name: tag.name})}}" class="tag-link">{{tag.name}}</a>
+			{% endfor %}
+		</div>
+		<div class="search">
+			{% if searchResult | length > 0 %}
+				<h4 class="result-title">Résultat(s) de la recherche</h4>
+				{% for article in searchResult %}
+					<div class="article-card">
+						<a href="#" class="result-title">{{article.title}}
+							<span>
+								{{article.createdAt|date('d/m/Y')}}</span>
+						</a>
+					</div>
+				{% endfor %}
+
+			{% endif %}
+
+			<h4>Recherche</h4>
+			{{ form_start(form) }}
+
+			<div class="form-item">
+				{{ form_row(form.words, {'id':'words'}) }}
+
+			</div>
+			<div class="form-item">
+				{{ form_row(form.category) }}
+			</div>
+			<div class="form-item">
+				{{ form_row(form.tag) }}
+			</div>
+			<button type="submit" , id="searchButton" formnovalidate>Envoyer</button>
+
+			{{ form_end(form) }}
+
+
+		</div>
+	</div>
+
+
+</div>

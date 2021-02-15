@@ -251,12 +251,20 @@ body {
             .search {
                 background-color: #fff;
                 padding-bottom : 20px;
+                
                 h4 {
                     text-align: center;
                     color : #fff;
                     background-color: #9D9C94;
                     padding : 10px 0;
                     font-size : 20px;
+                    margin-bottom : 0;
+                }
+                h4.result-title{
+                    background-color: #EC6436;
+                }
+                h3 {
+                    text-align : center;
                 }
                 form {
                     display : flex;
@@ -319,26 +327,12 @@ body {
             width : 90%;
             margin : 0 auto 30px;
             justify-content: space-evenly;
-            .form-field {
-                margin : 10px auto 0;
-                width : 100%;
-                border-radius : 5px;
-                border : 1px solid lightgray;
-            }
-            .form-choice{
-                border : none;
-                label {
-                    color : #4C4C4C;
-                    font-size : 12px;
-                }
-            }
         }
         .field-urls{
             display : flex;
             flex-direction: row;
             width : 90%;
             margin : auto;
-            // background-color: red;
             .form-field {
                 width : 90%;
             }
