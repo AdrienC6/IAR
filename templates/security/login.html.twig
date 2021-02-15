@@ -1,5 +1,6 @@
 <head>
 	<title>Info-Activisme Recherche</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/login.css">
 </head>
 {% block body %}
@@ -10,39 +11,33 @@
 			{% endfor %}
 		</div>
 	{% endfor %}
+	{% if error %}
+		<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+	{% endif %}
+
+
+	<div class="alert alert-alert">Connexion</div>
 
 	<form method="post">
-		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-		{% endif %}
-
-		{% if app.user %}
-			<div class="mb-3">
-				You are logged in as
-				{{ app.user.username }},
-				<a href="{{ path('app_logout') }}">Logout</a>
-			</div>
-		{% endif %}
-		<div class="alert alert-alert">Connexion</div>
 
 
-		<div class="container">
-			<div class="form-item">
+		<div class="all">
+			<div class="item">
 				<label for="inputEmail">Email</label>
 				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
 			</div>
 
-			<div class="form-item">
+
+			<div class="item">
 				<label for="inputPassword">Mot de passe</label>
 				<input type="password" name="password" id="inputPassword" class="form-control" required>
 			</div>
 
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<div class="item">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<input type="submit" id="button" value="Connexion">
+			</div>
+
 		</div>
-		<button class="btn btn-lg btn-primary" type="submit">
-			Connexion
-		</button>
-
-
 	</form>
 {% endblock %}

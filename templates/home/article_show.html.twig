@@ -1,0 +1,94 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="title">
+	<h1>{{article.title}}</h1>
+</div>
+
+<div class="full-article">
+	<div class="article-details">
+
+		<h2>
+			{% if article.id - 1 > 0 %}
+				<a href="{{path('article_show', {id: article.id -1})}}">Précédent
+
+				{% endif %}
+			</a>
+			{{article.title}}
+			{% if article.id + 1 <= articles| length %}
+				<a href="{{path('article_show', {id: article.id +1})}}">
+					Suivant
+
+				{% endif %}
+			</a>
+		</h2>
+
+		<p class="article-date">Publié le
+			{{article.createdAt| date('d/m/Y')}}</p>
+		<p class="article-category">Catégorie(s) :
+			{% for category in categories %}
+				<a href="{{path('category_show', {name: category.name})}}">|
+					{{category.name}}</a>
+			{% endfor %}
+		</p>
+
+		<p class="article-tag">Etiquette(s) :
+			{% for tag in tags %}
+				<a href="{{path('tag_show', {name: tag.name})}}" class="tags">|
+					{{tag.name}}</a>
+			{% endfor %}
+		</p>
+		{% include "_partials/_twitter.html.twig" %}
+		{% include "_partials/_facebook.html.twig" %}
+		<p>{{article.text}}</p>
+	</div>
+	<div class="widgets">
+		<div class="index">
+			<h4>Index</h4>
+			{% for tag in tagIndex %}
+				<a href="{{path('tag_show', {name: tag.name})}}" class="tag-link">{{tag.name}}</a>
+			{% endfor %}
+		</div>
+		<div class="search">
+			{% if searchResult | length > 0 %}
+				<h4 class="result-title">Résultat(s) de la recherche</h4>
+				{% for article in searchResult %}
+					<div class="article-card">
+						<a href="{{path('article_show', {id: article.id})}}" class="result-title">{{article.title}}
+							<span>
+								{{article.createdAt|date('d/m/Y')}}</span>
+						</a>
+					</div>
+				{% endfor %}
+
+			{% endif %}
+
+			<h4>Recherche</h4>
+			{{ form_start(form) }}
+
+			<div class="form-item">
+				{{ form_row(form.words, {'id':'words'}) }}
+
+			</div>
+			<div class="form-item">
+				{{ form_row(form.category) }}
+			</div>
+			<div class="form-item">
+				{{ form_row(form.tag) }}
+			</div>
+			<button type="submit" , id="searchButton" formnovalidate>Envoyer</button>
+
+			{{ form_end(form) }}
+
+
+		</div>
+	</div>
+
+
+</div>
+{% block javascripts %}
+{{ parent() }}
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
+	{% endblock %}
+										
+										{% endblock %}

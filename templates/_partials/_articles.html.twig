@@ -42,7 +42,7 @@
 				<h4 class="result-title">Résultat(s) de la recherche</h4>
 				{% for article in searchResult %}
 					<div class="article-card">
-						<a href="#" class="result-title">{{article.title}}
+						<a href="{{path('article_show', {id: article.id})}}" class="result-title">{{article.title}}
 							<span>
 								{{article.createdAt|date('d/m/Y')}}</span>
 						</a>

@@ -1,17 +1,13 @@
 {% extends "base.html.twig" %}
 
-{% block title %}
-	{{category.name}}
-{% endblock %}
-
 {% block body %}
 <div class="title">
 	<h1>{{category.name}}</h1>
 </div>
 
-{% include "_partials/_widgets.html.twig" %}
+{% include "_partials/_articles.html.twig" %}
 {% block javascripts %}
 {{ parent() }}
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
 	{% endblock %}
-			{% endblock %}
+							{% endblock %}
