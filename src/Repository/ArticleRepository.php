@@ -19,6 +19,19 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    /**
+     * Recherche les articles par le formulaire
+     */
+    public function search($words)
+    {
+        $query = $this->createQueryBuilder('a');
+        if ($words != null) {
+            $query->where('MATCH_AGAINST(a.title, a.text) AGAINST (:words boolean)>0')
+                ->setParameter('words', $words);
+        }
+
+        return $query->getQuery()->getResult();
+    }
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
