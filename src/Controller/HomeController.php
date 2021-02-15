@@ -54,8 +54,6 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('words')->getData() != null) { // Si champ pas vide
-                // On trouve article selon input
-                // $searchResult = $articleRepository->search($form->get('words')->getData()); 
                 if ($form->get('category')->getData() != null) {
 
                     // On retrouve tous les articles liés à la category
@@ -70,6 +68,8 @@ class HomeController extends AbstractController
                             }
                         }
                     }
+                } else {
+                    $searchResult = $articleRepository->search($form->get('words')->getData());
                 }
             }
         }
@@ -111,8 +111,6 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('words')->getData() != null) { // Si champ pas vide
-                // On trouve article selon input
-                // $searchResult = $articleRepository->search($form->get('words')->getData()); 
                 if ($form->get('category')->getData() != null) {
 
                     // On retrouve tous les articles liés à la category
@@ -127,6 +125,8 @@ class HomeController extends AbstractController
                             }
                         }
                     }
+                } else {
+                    $searchResult = $articleRepository->search($form->get('words')->getData());
                 }
             }
         }

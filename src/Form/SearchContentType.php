@@ -20,7 +20,7 @@ class SearchContentType extends AbstractType
                 'attr' => [
                     'class' => 'form-item',
                     'placeholder' => 'Recherche...',
-                    'required' => false
+                    'required' => true
                 ]
             ])
             ->add('category', EntityType::class, [
@@ -28,7 +28,7 @@ class SearchContentType extends AbstractType
                 'attr' => [
                     'required' => false
                 ],
-                'label' => 'Catégorie'
+                'placeholder' => 'Catégorie'
             ])
             ->add('Rechercher', SubmitType::class, [
                 'attr' => [

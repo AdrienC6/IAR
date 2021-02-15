@@ -18,7 +18,6 @@ class TagCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Nom'),
-            AssociationField::new('articles', 'Articles'),
         ];
     }
 }

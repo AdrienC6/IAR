@@ -31,26 +31,16 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Info-Activisme Recherche')
-            ->setFaviconPath('/images/logotest.png')
+            ->setFaviconPath('/images/Logo1.png')
             ->disableUrlSignatures();
     }
 
     public function configureMenuItems(): iterable
     {
-        // MenuItem::section('Blog');
-        // yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToRoute('Nouvel Article', 'far fa-newspaper', 'article_add');
-        // yield MenuItem::linkToRoute('Tous', 'fas fa-newspaper', 'home');
-        // yield MenuItem::linkToCrud('Catégories', 'fas fa-list', Category::class);
-        // yield MenuItem::linkToCrud('Etiquettes', 'fas fa-tags', Tag::class);
-        // yield MenuItem::linkToRoute('Site', 'fas fa-home', 'home');
-        // yield MenuItem::linkToCrud('Etiquettes', 'fas fa-tags', Article::class);
-
         return [
             MenuItem::linktoDashboard('Articles', 'far fa-newspaper')
                 ->setPermission('ROLE_ADMIN'),
 
-            // MenuItem::linkToCrud('Articles', 'far fa-newspaper', Article::class),
             MenuItem::linkToCrud('Catégories', 'fas fa-list', Category::class)
                 ->setPermission('ROLE_ADMIN'),
 
@@ -62,11 +52,6 @@ class DashboardController extends AbstractDashboardController
                 ->setAction('index'),
 
             MenuItem::linkToRoute('Site', 'fas fa-home', 'home'),
-
-            // MenuItem::linkToCrud('Mon Profil', 'fa fa-user', User::class)
-            //     ->setAction('detail')
-            //     ->setEntityId($this->getUser()->getRoles()),
-
         ];
     }
 
