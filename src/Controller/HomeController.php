@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\SearchContentType;
 use App\Repository\ArticleRepository;
+use App\Repository\BookingRepository;
 use App\Repository\TagRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -237,6 +238,69 @@ class HomeController extends AbstractController
             'searchResult' => $searchResult,
             'form' => $form->createView(),
             'articles' => $articles,
+            'tagIndex' => $tagIndex
+        ]);
+    }
+
+    /**
+     * @Route("/calendrier", name="calendar_show", priority=1)
+     */
+    public function calendar(BookingRepository $bookingRepository, Request $request, TagRepository $tagRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
+    {
+        $events = $bookingRepository->findAll();
+
+        $form = $this->createForm(SearchContentType::class);
+        $form->handleRequest($request);
+
+        $tagIndex = $tagRepository->findAll();
+
+
+        $searchResult = [];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('words')->getData() != null) { // Si champ pas vide
+
+                if ($form->get('category')->getData() != null) {
+
+                    if ($form->get('tag')->getData() != null) {
+                        $articlesTag = array_reverse($tagRepository->findOneBy(['name' => $form->get('tag')->getData()->getName()])->getArticles()->toArray());
+                        $articlesCategory = array_reverse($categoryRepository->findOneBy(['name' => $form->get('category')->getData()->getName()])->getArticles()->toArray());
+
+                        foreach ($articlesCategory as $a) {
+                            foreach ($articleRepository->search($form->get('words')->getData()) as $a2) {
+                                foreach ($articlesTag as $a4) {
+                                    $a5 = $a4->getTitle();
+                                    $a3 = $a2->getTitle();
+                                    if ($a3 == $a->getTitle() && $a->getTitle() == $a5) {
+                                        $searchResult[] = $a;
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // On retrouve tous les articles liés à la category
+                        $articlesCategory = array_reverse($categoryRepository->findOneBy(['name' => $form->get('category')->getData()->getName()])->getArticles()->toArray());
+
+                        // On les ajoute tous au résultat
+                        foreach ($articlesCategory as $a) {
+                            foreach ($articleRepository->search($form->get('words')->getData()) as $a2) {
+                                $a3 = $a2->getTitle();
+                                if ($a3 == $a->getTitle()) {
+                                    $searchResult[] = $a;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    $searchResult = $articleRepository->search($form->get('words')->getData());
+                }
+            }
+        }
+
+        return $this->render('home/calendar.html.twig', [
+            'events' => $events,
+            'form' => $form->createView(),
+            'searchResult' => $searchResult,
             'tagIndex' => $tagIndex
         ]);
     }

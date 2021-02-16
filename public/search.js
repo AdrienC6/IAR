@@ -6,10 +6,8 @@ searchButton.addEventListener('click', (e) => {
     e.preventDefault();
 
     if (words.value == "") {
-        words.value = "Veuillez saisir au moins un mot clé";
-        words.style.color = "#EC6436";
+        words.placeholder = "Veuillez saisir au moins un mot clé";
         setTimeout(() => {
-            words.value = "";
             words.placeholder = "Recherche..."
 
         }, 1500);

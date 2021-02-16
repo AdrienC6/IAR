@@ -32,9 +32,15 @@ class Category
      */
     private $articles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Booking::class, mappedBy="category")
+     */
+    private $bookings;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,5 +90,32 @@ class Category
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            $booking->removeCategory($this);
+        }
+
+        return $this;
     }
 }

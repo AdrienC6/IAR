@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Entity\Article;
+use App\Entity\Booking;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,6 +46,9 @@ class DashboardController extends AbstractDashboardController
                 ->setPermission('ROLE_ADMIN'),
 
             MenuItem::linkToCrud('Etiquettes', 'fas fa-tags', Tag::class)
+                ->setPermission('ROLE_ADMIN'),
+
+            MenuItem::linkToCrud('Calendrier', 'fas fa-calendar-alt', Booking::class)
                 ->setPermission('ROLE_ADMIN'),
 
             MenuItem::linkToCrud('Membres', 'fas fa-list', User::class)

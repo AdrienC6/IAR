@@ -522,5 +522,134 @@ body {
         }
         
     }
+    .events-container {
+        display : flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        background-color: #4C4C4C;
+        width : 100%;
+        .events {
+            width : 55%;
+            margin : 2% auto;
+            padding : 15px;
+            display : flex;
+            flex-direction: column;
+            justify-content: center;
+            @media screen and (max-width : 1200px){
+                width : 100%;
+            }
+            .event {
+                background : #fff;
+                margin-bottom : 2%;
+                .title {
+                    padding : 0;
+                    box-shadow: none;
+                    h2 {
+                        padding : 5px 0;
+                    }
+                }
+                p {
+                    text-align : center;
+                    width : 100%;
+                    span {
+                        color : #EC6436;
+                    }
+                }
+                a {
+                    color : #EC6436;
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+        .widgets {
+            width : 35%;
+            margin : 0 auto;
+            @media screen and (max-width : 1200px){
+                display : none;
+            }
+            .index {
+                background-color: #fff;
+                padding-bottom : 20px;
+                h4 {
+                    text-align: center;
+                    color : #fff;
+                    background-color: #9D9C94;
+                    padding : 10px 0;
+                    font-size : 20px;
+                }
+                .tag-link {
+                    color: #EC6436;
+                    display: block;
+                    text-align: center;
+                    text-decoration: none;
+                }
+
+            }
+            .search {
+                background-color: #fff;
+                padding-bottom : 20px;
+                
+                h4 {
+                    text-align: center;
+                    color : #fff;
+                    background-color: #9D9C94;
+                    padding : 10px 0;
+                    font-size : 20px;
+                    margin-bottom : 0;
+                }
+                h4.result-title{
+                    background-color: #EC6436;
+                }
+                h3 {
+                    text-align : center;
+                }
+                form {
+                    display : flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    .form-item {
+                        margin : 2% auto;
+                        width : 80%;
+                        input, select {
+                            width : 100%;
+                        }
+                    }
+                    button {
+                        margin : 2% auto 0;
+                        width : 100%;
+                        background-color: #EC6436;
+                        color : #fff;
+                        padding : 5px 0;
+                        border : none;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+                .article-card {
+                    display : flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding-top : 20px;
+                    .result-title {
+                        text-decoration : none;
+                        font-size : 26px;
+                        color : #4C4C4C;
+                        text-align: center;
+                        span {
+                            background-color: #EC6436;
+                            color : #fff;
+                            font-size : 12Px;
+                            padding : 3px 8px;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 }
 

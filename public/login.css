@@ -19,14 +19,6 @@ input {
     margin-top : 10px;
 }
 
-button {
-    
-}
-
-button:hover {
-    cursor: pointer;
-}
-
 .alert-danger {
     color : #fff;
     width : 100%;
@@ -46,11 +38,8 @@ button:hover {
 
 form {
     height : 90vh;
-    /* display : flex;
-    flex-direction: column; */
     width : 70%;
     margin : auto;
-    /* align-items: center; */
 }
 
 .item {
