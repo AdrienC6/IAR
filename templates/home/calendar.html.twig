@@ -9,70 +9,57 @@
 		<div class="events">
 			{% for event in events %}
 				<div class="event">
+
 					<div class="title">
 						<h2>{{event.title}}</h2>
 					</div>
+
 					<p>{{event.beginAt|date('d/m/Y')}}
 						<span>{{event.beginAt|date('H:i')}}</span>
-
-
 						-
 						{{event.endAt|date('d/m/Y')}}
 						<span>{{event.endAt|date('H:i')}}</span>
 					</p>
 
-
-					<p>
-						<a href="#">Détails</a>
+					<p class="{{event.id}} modal" data-id="{{event.id}}">-Détails-
 					</p>
-				</div>
 
+					<div class="details" id="{{event.id}}">
+						<p class="description">{{event.description}}</p>
+
+						{% if event.facebookEvent %}
+							<p class="link">
+								<a href="{{event.facebookEvent}}">Lien de l'évènement</a>
+							</p>
+						{% endif %}
+
+						{% if event.category| length > 0 %}
+							<p class="cat-tag">
+								Catégorie(s) :
+								{% for category in event.category %}
+									|
+									<a href="{{path('category_show', {name:category.name})}}">{{category.name}}</a>
+								{% endfor %}
+							</p>
+						{% endif %}
+
+						{% if event.tag| length > 0 %}
+							<p class="cat-tag">
+								Etiquette(s) :
+								{% for tag in event.tag %}
+									|
+									<a href="{{path('tag_show', {name:tag.name})}}">{{tag.name}}</a>
+								{% endfor %}
+							</p>
+						{% endif %}
+
+						<p class="hide-{{event.id}} hide">-Réduire-</p>
+
+					</div>
+				</div>
 			{% endfor %}
-
-
 		</div>
 
-		<div class="widgets">
-			<div class="index">
-				<h4>Index</h4>
-				{% for tag in tagIndex %}
-					<a href="{{path('tag_show', {name: tag.name})}}" class="tag-link">{{tag.name}}</a>
-				{% endfor %}
-			</div>
-			<div class="search">
-				{% if searchResult | length > 0 %}
-					<h4 class="result-title">Résultat(s) de la recherche</h4>
-					{% for article in searchResult %}
-						<div class="article-card">
-							<a href="{{path('article_show', {id: article.id})}}" class="result-title">{{article.title}}
-								<span>
-									{{article.createdAt|date('d/m/Y')}}</span>
-							</a>
-						</div>
-					{% endfor %}
-
-				{% endif %}
-
-				<h4>Recherche</h4>
-				{{ form_start(form) }}
-
-				<div class="form-item">
-					{{ form_row(form.words, {'id':'words'}) }}
-
-				</div>
-				<div class="form-item">
-					{{ form_row(form.category) }}
-				</div>
-				<div class="form-item">
-					{{ form_row(form.tag) }}
-				</div>
-				<button type="submit" , id="searchButton" formnovalidate>Envoyer</button>
-
-				{{ form_end(form) }}
-
-
-			</div>
-		</div>
-
+		{% include "_partials/_widgets.html.twig" %}
 	</div>
 {% endblock %}

@@ -182,6 +182,10 @@ body {
                 @media screen and (max-width: 1200px){
                     width : 90%;
                 }
+                .title-title {
+                    color : #4C4C4C;
+                    text-decoration: none;
+                }
                 .article-date {
                     background : #EC6436;
                     color : #fff;
@@ -530,15 +534,22 @@ body {
         width : 100%;
         .events {
             width : 55%;
-            margin : 2% auto;
+            margin : 2%;
             padding : 15px;
-            display : flex;
             flex-direction: column;
             justify-content: center;
             @media screen and (max-width : 1200px){
                 width : 100%;
             }
             .event {
+                    .modal{
+                        padding-bottom : 2%;
+                        font-size : 10px;
+                        &:hover {
+                            color :#EC6436;
+                            cursor: pointer;
+                        }
+                    }
                 background : #fff;
                 margin-bottom : 2%;
                 .title {
@@ -555,6 +566,9 @@ body {
                         color : #EC6436;
                     }
                 }
+                .link {
+                    margin : 5% 0;
+                }
                 a {
                     color : #EC6436;
                     text-decoration: none;
@@ -562,6 +576,29 @@ body {
                         text-decoration: none;
                     }
                 }
+                .details {
+                    display : none;
+                    .hide {
+                        font-size : 10px;
+                        padding-bottom : 2%;
+                        margin-top : 5%;
+                        &:hover {
+                            cursor: pointer;
+                            color : #EC6436;
+                        }
+                    }
+                    .description {
+                        text-align: center;
+                        width : 90%;
+                        margin : auto;
+                        color : #4C4C4C;
+                        font-size : 13px;
+                    }
+                    .cat-tag {
+                        font-size : 12px;
+                    }
+                }
+                
             }
         }
         .widgets {
@@ -634,6 +671,10 @@ body {
                     flex-direction: column;
                     justify-content: center;
                     padding-top : 20px;
+                    .title-title {
+                        color : #EC6436;
+                        text-decoration: none;
+                    }
                     .result-title {
                         text-decoration : none;
                         font-size : 26px;

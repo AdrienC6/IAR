@@ -5,9 +5,9 @@
 	<h1>{{category.name}}</h1>
 </div>
 
-{% include "_partials/_articles.html.twig" %}
+{% include "_partials/_articles.html.twig" with {tagIndex : tags} %}
 {% block javascripts %}
 {{ parent() }}
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
 	{% endblock %}
-							{% endblock %}
+								{% endblock %}
