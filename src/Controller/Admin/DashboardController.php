@@ -32,7 +32,7 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Info-Activisme Recherche')
-            ->setFaviconPath('/images/Logo1.png')
+            ->setFaviconPath('/images/favicon.png')
             ->disableUrlSignatures();
     }
 

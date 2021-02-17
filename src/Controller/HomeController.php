@@ -171,4 +171,12 @@ class HomeController extends AbstractController
             'categories' => $categories
         ]);
     }
+
+    /**
+     * @Route("/csv", name="csv", priority=1)
+     */
+    public function csv()
+    {
+        dd('ok');
+    }
 }
