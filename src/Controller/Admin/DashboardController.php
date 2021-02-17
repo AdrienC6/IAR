@@ -39,6 +39,8 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
+            MenuItem::linkToRoute('Site', 'fas fa-home', 'home'),
+
             MenuItem::linktoDashboard('Articles', 'far fa-newspaper')
                 ->setPermission('ROLE_ADMIN'),
 
@@ -51,11 +53,13 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Calendrier', 'fas fa-calendar-alt', Booking::class)
                 ->setPermission('ROLE_ADMIN'),
 
-            MenuItem::linkToCrud('Membres', 'fas fa-list', User::class)
-                ->setPermission('ROLE_ADMIN')
-                ->setAction('index'),
+            MenuItem::subMenu('Membres', 'fas fa-users')->setSubItems([
+                MenuItem::linkToCrud('Membres', 'fas fa-user', User::class)
+                    ->setPermission('ROLE_ADMIN')
+                    ->setAction('index'),
+                MenuItem::linkToRoute('Import', 'fas fa-user-friends', 'csv')
+            ])
 
-            MenuItem::linkToRoute('Site', 'fas fa-home', 'home'),
         ];
     }
 

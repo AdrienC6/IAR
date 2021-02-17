@@ -1,2 +1,0 @@
-email,roles,password,firstName,lastName, username
-admin@example.com,"[""ROLE_USER""]",admin,Admin,Gircor, Admin

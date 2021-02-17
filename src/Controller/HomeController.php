@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use App\CustomServices\CSVImportService;
-use App\CustomServices\SearchService;
 use App\Form\CSVType;
+use App\Repository\TagRepository;
+use App\CustomServices\SearchService;
 use App\Repository\ArticleRepository;
 use App\Repository\BookingRepository;
-use App\Repository\TagRepository;
 use App\Repository\CategoryRepository;
+use App\CustomServices\CSVImportService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 
 class HomeController extends AbstractController
@@ -180,6 +180,11 @@ class HomeController extends AbstractController
      */
     public function csv(Request $request, CSVImportService $cSVImportService)
     {
+        $user = $this->getUser();
+        // dd($user->getRoles());
+        if (!in_array("ROLE_ADMIN", $user->getRoles())) {
+            return $this->redirectToRoute('home');
+        }
         $form = $this->createForm(CSVType::class);
         $form->handleRequest($request);
 
@@ -197,6 +202,8 @@ class HomeController extends AbstractController
 
             $cSVImportService->getDataFromFile();
             $cSVImportService->createUsers();
+
+            return $this->redirectToRoute('admin');
         }
 
         return $this->render("admin/csv_import.html.twig", [

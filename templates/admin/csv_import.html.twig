@@ -1,8 +1,22 @@
-{% extends "base.html.twig" %}
+<head>
+	<title>Info-Activisme Recherche</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
 
-{% block body %}
+
+	<link rel="stylesheet" href="/csv.css">
+</head>
+
+
+<div class="all">
+
 	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<button type="submit">Importer</button>
+	<div class="item">
+		{{form_label(form.csv_file)}}
+		{{ form_widget(form.csv_file) }}
+
+	</div>
+	<input type="submit" id="button" value="Importer">
 	{{ form_end(form) }}
-{% endblock %}
+
+</div>
