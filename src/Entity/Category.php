@@ -37,10 +37,16 @@ class Category
      */
     private $bookings;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Calendar::class, mappedBy="categories")
+     */
+    private $calendars;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->calendars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,6 +120,33 @@ class Category
     {
         if ($this->bookings->removeElement($booking)) {
             $booking->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Calendar[]
+     */
+    public function getCalendars(): Collection
+    {
+        return $this->calendars;
+    }
+
+    public function addCalendar(Calendar $calendar): self
+    {
+        if (!$this->calendars->contains($calendar)) {
+            $this->calendars[] = $calendar;
+            $calendar->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendar(Calendar $calendar): self
+    {
+        if ($this->calendars->removeElement($calendar)) {
+            $calendar->removeCategory($this);
         }
 
         return $this;

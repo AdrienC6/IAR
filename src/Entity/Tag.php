@@ -37,10 +37,16 @@ class Tag
      */
     private $bookings;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Calendar::class, mappedBy="tags")
+     */
+    private $calendars;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->calendars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,6 +120,33 @@ class Tag
     {
         if ($this->bookings->removeElement($booking)) {
             $booking->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Calendar[]
+     */
+    public function getCalendars(): Collection
+    {
+        return $this->calendars;
+    }
+
+    public function addCalendar(Calendar $calendar): self
+    {
+        if (!$this->calendars->contains($calendar)) {
+            $this->calendars[] = $calendar;
+            $calendar->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendar(Calendar $calendar): self
+    {
+        if ($this->calendars->removeElement($calendar)) {
+            $calendar->removeTag($this);
         }
 
         return $this;

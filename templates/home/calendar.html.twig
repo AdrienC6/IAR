@@ -2,64 +2,89 @@
 
 {% block body %}
 	<div class="title">
-		<h1>Evènements</h1>
+		<h1>Calendrier</h1>
 	</div>
+	<div class="full-article">
+        <div class="article-details">
+            <div class="event-infos">
+                <h3 id="event-title"></h3>
+                <p id="event-date"></p>
+                <p id="event-description"></p>
+                <a href="#" target="_blank" id="event-url">Lien de l'évènement</a>
+                <p id="event-categories">Catégories :
+                </p>
+                <p id="event-tags">Etiquettes :
+                </p>
+                <p id="hide">Réduire</p>
 
-	<div class="events-container">
-		<div class="events">
-			{% for event in events %}
-				<div class="event">
+            </div>
 
-					<div class="title">
-						<h2>{{event.title}}</h2>
-					</div>
+            <div id="calendar"></div>
 
-					<p>{{event.beginAt|date('d/m/Y')}}
-						<span>{{event.beginAt|date('H:i')}}</span>
-						-
-						{{event.endAt|date('d/m/Y')}}
-						<span>{{event.endAt|date('H:i')}}</span>
-					</p>
+        </div>
+        {% include "_partials/_widgets.html.twig" %}
 
-					<p class="{{event.id}} modal" data-id="{{event.id}}">-Détails-
-					</p>
-
-					<div class="details" id="{{event.id}}">
-						<p class="description">{{event.description}}</p>
-
-						{% if event.facebookEvent %}
-							<p class="link">
-								<a href="{{event.facebookEvent}}">Lien de l'évènement</a>
-							</p>
-						{% endif %}
-
-						{% if event.category| length > 0 %}
-							<p class="cat-tag">
-								Catégorie(s) :
-								{% for category in event.category %}
-									|
-									<a href="{{path('category_show', {name:category.name})}}">{{category.name}}</a>
-								{% endfor %}
-							</p>
-						{% endif %}
-
-						{% if event.tag| length > 0 %}
-							<p class="cat-tag">
-								Etiquette(s) :
-								{% for tag in event.tag %}
-									|
-									<a href="{{path('tag_show', {name:tag.name})}}">{{tag.name}}</a>
-								{% endfor %}
-							</p>
-						{% endif %}
-
-						<p class="hide-{{event.id}} hide">-Réduire-</p>
-
-					</div>
-				</div>
-			{% endfor %}
-		</div>
-
-		{% include "_partials/_widgets.html.twig" %}
-	</div>
+    </div>
 {% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	
+<script type="text/javascript">
+	window.onload = () => {
+        let calendarElement = document.querySelector( '#calendar' );
+
+
+        let calendar = new FullCalendar.Calendar(calendarElement, {
+
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            timeZone:'Europe/Paris',
+            firstDay : 1,
+            buttonText : {
+                list : 'Aujourd\'hui',
+                dayGridMonth : 'Mois'
+            },
+
+            headerToolbar: {
+                start: 'list dayGridMonth',
+                center: 'title',
+                end: 'prev next'
+            },
+            events: {{ data | raw }},
+            
+
+            eventClick: function ( info ) {
+                document.getElementById( 'event-title' ).innerHTML = info.event.title;
+                document.getElementById( 'event-date' ).innerHTML = info.event.extendedProps.startDisplay + " - " + info.event.extendedProps.endDisplay;
+                document.getElementById( 'event-description' ).innerHTML = info.event.extendedProps.description;
+                document.getElementById( 'event-url' ).href = info.event.extendedProps.urlEvent;
+                
+                categories = info.event.extendedProps.categories;
+                categories.forEach( element => {
+                    document.getElementById( 'event-categories' ).innerHTML = `Catégorie(s) : <span class=''> | ${ element } </span>`;
+                })
+
+                tags = info.event.extendedProps.tags;
+                tags.forEach( element => {
+                    document.getElementById( 'event-tags' ).innerHTML = `Etiquette(s) : <span class=''> | ${ element } </span>`;
+                })
+
+                document.querySelector('.event-infos').style.display = "block";
+                document.getElementById('hide').addEventListener('click', ()=>{
+                    document.querySelector('.event-infos').style.display = "none";
+                })
+
+                window.scrollTo( 0, 0 );
+            } 
+        })
+        calendar.render();
+
+
+
+
+    }
+</script>
+
+			{% endblock %}

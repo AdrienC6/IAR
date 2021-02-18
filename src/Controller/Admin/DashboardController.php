@@ -6,6 +6,7 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Booking;
+use App\Entity\Calendar;
 use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,7 +59,9 @@ class DashboardController extends AbstractDashboardController
                     ->setPermission('ROLE_ADMIN')
                     ->setAction('index'),
                 MenuItem::linkToRoute('Import', 'fas fa-user-friends', 'csv')
-            ])
+            ]),
+
+            MenuItem::linkToCrud('Calendar', 'fas fa-list', Calendar::class)
 
         ];
     }

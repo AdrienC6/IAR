@@ -9,6 +9,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\BookingRepository;
 use App\Repository\CategoryRepository;
 use App\CustomServices\CSVImportService;
+use App\Repository\CalendarRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -147,7 +148,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/calendrier", name="calendar_show", priority=1)
      */
-    public function calendar(BookingRepository $bookingRepository, Request $request): Response
+    public function calendar(BookingRepository $bookingRepository, Request $request, CalendarRepository $calendar): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -161,18 +162,48 @@ class HomeController extends AbstractController
             $categories = array_reverse($array);
         }
 
+        $events = $calendar->findAll();
+        $meetings = [];
+        foreach ($events as $event) {
+            $categoriesEvent = $event->getCategories();
+            $array = $categoriesEvent->toArray();
+            $categories = array_reverse($array);
+            $categoriesArray = [];
+            foreach ($categories as $c) {
+                $categoriesArray[] = $c->getName();
+            }
+
+            $tagsEvent = $event->getTags();
+            $array = $tagsEvent->toArray();
+            $tags = array_reverse($array);
+            $tagsArray = [];
+            foreach ($tags as $t) {
+                $tagsArray[] = $t->getName();
+            }
+
+            $meetings[] = [
+                'id' => $event->getId(),
+                'start' => $event->getStart()->format('Y-m-d H:i:s'),
+                'end' => $event->getEnd()->format('Y-m-d H:i:s'),
+                'title' => $event->getTitle(),
+                'description' => $event->getDescription(),
+                'categories' => $categoriesArray,
+                'tags' => $tagsArray,
+                'urlEvent' => $event->getUrl(),
+                'allDay' => $event->getAllDay(),
+                'startDisplay' => $event->getStart()->format('d/m/Y H:i'),
+                'endDisplay' => $event->getEnd()->format('d/m/Y H:i')
+            ];
+        }
+
+        $data = json_encode($meetings);
+
         $tagIndex = $this->tagRepository->findAll();
 
-        $form = $this->searchService->search($request)['form'];
+        $form = $this->searchService->search($request)['form']->createView();
         $searchResult = $this->searchService->search($request)['searchResult'];
 
-        return $this->render('home/calendar.html.twig', [
-            'events' => $events,
-            'form' => $form->createView(),
-            'searchResult' => $searchResult,
-            'tagIndex' => $tagIndex,
-            'categories' => $categories
-        ]);
+        return $this->render('home/calendar.html.twig',compact('events', 'form', 'searchResult', 'tagIndex', 'categories', 'data'));
     }
 
     /**
@@ -210,4 +241,6 @@ class HomeController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    
 }

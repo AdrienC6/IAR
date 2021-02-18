@@ -1,4 +1,6 @@
-
+html {
+    scroll-behavior: smooth;
+}
 body {
     width : 100vw;
     overflow-x : hidden;
@@ -524,173 +526,65 @@ body {
 
             }
         }
+        #calendar {
+        width: 80%;
+        margin: auto;
+        margin : 2% auto;
+        }
+
+        .fc .fc-button-group > .fc-button,.fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active, .fc .fc-button:not(:disabled), .fc a[data-navlink], .fc-event.fc-event-draggable, .fc-event[href] {
+            background-color: #EC6436;
+            border: none;
+            outline: none;
+        }
+
+        .fc-daygrid-event-dot {
+            border-color: #EC6436;
+            display: none;
+        }
+
+        .fc-h-event .fc-event-title-container {
+            text-align: center;
+        }
+
+        .event-infos {
+            text-align: center;
+            margin: auto;
+            width : 80%;
+            background-color: #fff;
+            padding : 10px 0;
+            display : none;
+            border : 1px solid #EC6436;
+        }
+
+        #event-description {
+            font-size : 12px;
+        }
+
+        #event-url {
+            color :  #EC6436;
+            text-decoration: none;
+            font-size : 12px;
+        }
+
+        #event-categories, #event-tags {
+            font-size : 12px;
+        }
+
+        .event-tag, .event-category {
+            color : #EC6436;
+            text-decoration: none;
+        }
+
+        #hide {
+            font-size : 10px;
+            color : #EC6436;
+        }
+
+        #hide:hover {
+            cursor: pointer;
+        }
         
-    }
-    .events-container {
-        display : flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        background-color: #4C4C4C;
-        width : 100%;
-        .events {
-            width : 55%;
-            margin : 2%;
-            padding : 15px;
-            flex-direction: column;
-            justify-content: center;
-            @media screen and (max-width : 1200px){
-                width : 100%;
-            }
-            .event {
-                    .modal{
-                        padding-bottom : 2%;
-                        font-size : 10px;
-                        &:hover {
-                            color :#EC6436;
-                            cursor: pointer;
-                        }
-                    }
-                background : #fff;
-                margin-bottom : 2%;
-                .title {
-                    padding : 0;
-                    box-shadow: none;
-                    h2 {
-                        padding : 5px 0;
-                    }
-                }
-                p {
-                    text-align : center;
-                    width : 100%;
-                    span {
-                        color : #EC6436;
-                    }
-                }
-                .link {
-                    margin : 5% 0;
-                }
-                a {
-                    color : #EC6436;
-                    text-decoration: none;
-                    &:hover {
-                        text-decoration: none;
-                    }
-                }
-                .details {
-                    display : none;
-                    .hide {
-                        font-size : 10px;
-                        padding-bottom : 2%;
-                        margin-top : 5%;
-                        &:hover {
-                            cursor: pointer;
-                            color : #EC6436;
-                        }
-                    }
-                    .description {
-                        text-align: center;
-                        width : 90%;
-                        margin : auto;
-                        color : #4C4C4C;
-                        font-size : 13px;
-                    }
-                    .cat-tag {
-                        font-size : 12px;
-                    }
-                }
-                
-            }
-        }
-        .widgets {
-            width : 35%;
-            margin : 0 auto;
-            @media screen and (max-width : 1200px){
-                display : none;
-            }
-            .index {
-                background-color: #fff;
-                padding-bottom : 20px;
-                h4 {
-                    text-align: center;
-                    color : #fff;
-                    background-color: #9D9C94;
-                    padding : 10px 0;
-                    font-size : 20px;
-                }
-                .tag-link {
-                    color: #EC6436;
-                    display: block;
-                    text-align: center;
-                    text-decoration: none;
-                }
-
-            }
-            .search {
-                background-color: #fff;
-                padding-bottom : 20px;
-                
-                h4 {
-                    text-align: center;
-                    color : #fff;
-                    background-color: #9D9C94;
-                    padding : 10px 0;
-                    font-size : 20px;
-                    margin-bottom : 0;
-                }
-                h4.result-title{
-                    background-color: #EC6436;
-                }
-                h3 {
-                    text-align : center;
-                }
-                form {
-                    display : flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    .form-item {
-                        margin : 2% auto;
-                        width : 80%;
-                        input, select {
-                            width : 100%;
-                        }
-                    }
-                    button {
-                        margin : 2% auto 0;
-                        width : 100%;
-                        background-color: #EC6436;
-                        color : #fff;
-                        padding : 5px 0;
-                        border : none;
-                        &:hover {
-                            cursor: pointer;
-                        }
-                    }
-                }
-                .article-card {
-                    display : flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    padding-top : 20px;
-                    .title-title {
-                        color : #EC6436;
-                        text-decoration: none;
-                    }
-                    .result-title {
-                        text-decoration : none;
-                        font-size : 26px;
-                        color : #4C4C4C;
-                        text-align: center;
-                        span {
-                            background-color: #EC6436;
-                            color : #fff;
-                            font-size : 12Px;
-                            padding : 3px 8px;
-                        }
-                    }
-                }
-
-            }
-        }
     }
 }
 
