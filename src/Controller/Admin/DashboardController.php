@@ -51,7 +51,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Etiquettes', 'fas fa-tags', Tag::class)
                 ->setPermission('ROLE_ADMIN'),
 
-            MenuItem::linkToCrud('Calendrier', 'fas fa-calendar-alt', Booking::class)
+            MenuItem::linkToCrud('Calendrier', 'fas fa-calendar-alt', Calendar::class)
                 ->setPermission('ROLE_ADMIN'),
 
             MenuItem::subMenu('Membres', 'fas fa-users')->setSubItems([
@@ -60,8 +60,6 @@ class DashboardController extends AbstractDashboardController
                     ->setAction('index'),
                 MenuItem::linkToRoute('Import', 'fas fa-user-friends', 'csv')
             ]),
-
-            MenuItem::linkToCrud('Calendar', 'fas fa-list', Calendar::class)
 
         ];
     }

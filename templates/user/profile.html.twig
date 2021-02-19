@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	{% for type,messages in app.flashes %}
+		{% for message in messages %}
+			<div class="alert-success">{{message}}</div>
+
+		{% endfor %}
+	{% endfor %}
+    <div class="title">
+        <h1>Mon Profil</h1>
+    </div>
+	<div class="form">
+		<table>
+            <thead>
+                <tr>
+                    <th>NOM</th>
+                    <th>PRENOM</th>
+                    <th>EMAIL</th>
+                    <th>UTILISATEUR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{app.user.lastName}}</td>
+                    <td>{{app.user.firstName}}</td>
+                    <td>{{app.user.email}}</td>
+                    <td>{{app.user.pseudo}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="user-actions">
+            <a class="user-action" href="{{path('user_profile_edit')}}">Modifier mes informations</a>
+            <a class="user-action">Modifier mon mot de passe</a>
+        </div>
+
+	</div>
+
+{% endblock %}

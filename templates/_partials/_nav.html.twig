@@ -30,6 +30,10 @@
 		<div class="item">
 			<a href="{{path('app_logout')}}">Déconnexion</a>
 		</div>
+		<div class="item">
+			<a href="{{path('user_profile')}}">Profil</a>
+		</div>
+
 		<div class="dropdown">
 			<button class="dropbtn">
 				<i class="fas fa-bars"></i>
@@ -45,11 +49,14 @@
 				{% endfor %}
 
 
-				<a href="">Calendrier</a>
+				<a href="{{path('calendar_show')}}">Calendrier</a>
+
 
 				<a href="">Archives</a>
 
-				<a href="">Déconnexion</a>
+				<a href="{{path('user_profile')}}">Profil</a>
+
+				<a href="{{path('app_logout')}}">Déconnexion</a>
 
 
 			</div>

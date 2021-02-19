@@ -9,7 +9,14 @@ body {
     font-family: sans-serif;
     letter-spacing:1px;
     background-color: #F5F5F5;
-
+    min-height: 100vh;
+    .alert-success{
+        background: lightgreen;
+        text-align: center;
+        padding: 20px;
+        border: 1px solid green;
+        filter: opacity(0.5);
+    }
     a:hover {
         cursor: pointer;
     }
@@ -294,6 +301,7 @@ body {
                             cursor: pointer;
                         }
                     }
+                    
                 }
                 .article-card {
                     display : flex;
@@ -374,6 +382,57 @@ body {
         .form-item {
             display : flex;
             flex-direction: column;
+            text-align: center;
+            input{
+                text-align: center;
+                color : #4C4C4C;
+                border-radius : 5px;
+                border : 1px solid #EC6436;
+                outline : none;
+                margin-top : 2%;
+            }
+            label {
+                color : #4C4C4C;
+            }
+        }
+        table thead tr th {
+            padding : 15px 0;
+        }
+        table td {
+            text-align: center;
+        }
+        table {
+            @media screen and (max-width : 1200px){
+                display : none;
+            }
+        }
+        .user-actions {
+            display : flex;
+            flex-direction: row;
+            margin : 5%;
+            .user-action {
+                width : 40%;
+                margin : auto;
+                background: #EC6436;
+                border: none;
+                color: white;
+                padding: 5px;
+                text-decoration : none;
+                text-align: center;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+        button {
+            width: 100%;
+            background: #EC6436;
+            border: none;
+            color: white;
+            padding: 5px;
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 

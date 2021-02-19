@@ -39,7 +39,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/{name}", name="category_show")
+     * @Route("/{name}", name="category_show", priority=-1)
      */
     public function categoryShow($name, Request $request): Response
     {
