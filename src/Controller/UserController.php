@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\ChangePWType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,6 +41,34 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/profile_edit.html.twig', [
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/profile/editpw", name="user_edit_pw" )
+     */
+    public function passwordEdit(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $em):Response
+    {
+        $form = $this->createForm(ChangePWType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()&&$form->isValid()){
+            $user = $this->getUser();
+            $currentPw = $form['currentPassword']->getData();
+            $newPw = $encoder->encodePassword($user, $form['newPassword']->getData());
+
+            if($encoder->isPasswordValid($user, $currentPw)){
+                $user->setPassword($newPw);
+                $em->flush();
+                $this->addFlash('success', 'Mot de passe modifié avec succès');
+                return $this->redirectToRoute('user_profile');
+            } else {
+                $this->addFlash('error', 'Le mot de passe saisi n\'est pas valide');
+            }
+        }
+
+        return $this->render('user/edit_password.html.twig', [
             'form'=>$form->createView()
         ]);
     }

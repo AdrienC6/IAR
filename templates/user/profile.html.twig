@@ -3,13 +3,14 @@
 {% block body %}
 	{% for type,messages in app.flashes %}
 		{% for message in messages %}
-			<div class="alert-success">{{message}}</div>
+			<div class="alert-{{type}}">{{message}}</div>
 
 		{% endfor %}
 	{% endfor %}
     <div class="title">
         <h1>Mon Profil</h1>
     </div>
+    <p></p>
 	<div class="form">
 		<table>
             <thead>
@@ -31,7 +32,7 @@
         </table>
         <div class="user-actions">
             <a class="user-action" href="{{path('user_profile_edit')}}">Modifier mes informations</a>
-            <a class="user-action">Modifier mon mot de passe</a>
+            <a class="user-action" href="{{path('user_edit_pw')}}">Modifier mon mot de passe</a>
         </div>
 
 	</div>

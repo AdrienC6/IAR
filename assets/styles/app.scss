@@ -17,6 +17,13 @@ body {
         border: 1px solid green;
         filter: opacity(0.5);
     }
+    .alert-error{
+        background: #FB8989;
+        text-align: center;
+        padding: 20px;
+        border: 1px solid red;
+        filter: opacity(0.5);
+    }
     a:hover {
         cursor: pointer;
     }
@@ -644,6 +651,9 @@ body {
             cursor: pointer;
         }
         
+    }
+    .form-light {
+        background : #F5F5F5;
     }
 }
 
