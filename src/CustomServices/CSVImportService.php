@@ -3,9 +3,12 @@
 namespace App\CustomServices;
 
 use App\Entity\User;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +19,15 @@ class CSVImportService extends AbstractController
     protected $em;
     protected $userRepository;
     protected $encoder;
+    protected $mailer;
 
-    public function __construct(EntityManagerInterface $em, UserRepository $userRepository, UserPasswordEncoderInterface $encoder)
+    public function __construct(EntityManagerInterface $em, UserRepository $userRepository, UserPasswordEncoderInterface $encoder, MailerInterface $mailer)
     {
         // parent::__construct();
         $this->em = $em;
         $this->userRepository = $userRepository;
         $this->encoder = $encoder;
+        $this->mailer = $mailer;
     }
 
     public function getDataFromFile(): array
@@ -52,8 +57,6 @@ class CSVImportService extends AbstractController
 
     public function createUsers(): void
     {
-
-
         foreach ($this->getDataFromFile() as $row) {
             if (array_key_exists('email', $row) && !empty($row['email'])) {
                 $user = $this->userRepository->findOneBy([
@@ -69,9 +72,20 @@ class CSVImportService extends AbstractController
                         ->setLastName($row['lastName'])
                         ->setRoles(["ROLE_USER"])
                         ->setPassword($hashPassword)
-                        ->setUsername($row['firstName'] . $row['lastName'] . mt_rand(1, 10));
-
+                        ->setUsername($row['email'])
+                        ->setVerified(false)
+                        ->setPseudo($row['username'] ? $row['username'] : $row['firstName'] . $row['lastName'] . mt_rand(1, 10));
                     $this->em->persist($user);
+
+                    $email = (new TemplatedEmail())
+                        ->from('gircor@gircor.net')
+                        ->to($row['email'])
+                        ->subject('Inscription sur le site Info-Activisme Recherche')
+                        ->htmlTemplate('mails/subscribe.html.twig')
+                        ->context([
+                            'username'=>$row['email']
+                        ]);
+                    $this->mailer->send(($email));
                 }
             }
         }

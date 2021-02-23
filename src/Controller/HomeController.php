@@ -9,6 +9,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\BookingRepository;
 use App\Repository\CategoryRepository;
 use App\CustomServices\CSVImportService;
+use App\CustomServices\GetUserService;
 use App\Repository\CalendarRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +36,13 @@ class HomeController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
+
+        if($user->getVerified()!= true){
+            $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
+            return $this->redirectToRoute('user_edit_pw');
+        }
+
+
         return $this->render('home/index.html.twig');
     }
 
@@ -46,6 +54,11 @@ class HomeController extends AbstractController
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute('app_login');
+        }
+
+        if ($user->getVerified() != true) {
+            $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
+            return $this->redirectToRoute('user_edit_pw');
         }
 
         $category = $this->categoryRepository->findOneBy(['name' => $name]); // La catégorie à afficher sur la page
@@ -81,6 +94,11 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        if ($user->getVerified() != true) {
+            $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
+            return $this->redirectToRoute('user_edit_pw');
+        }
+
         $tag = $this->tagRepository->findOneBy(['name' => $name]); // Tag à afficher sur la page
         if (!$tag) {
             throw $this->createNotFoundException("L'étiquette demandée n'existe pas..."); // Si pas trouvé
@@ -112,6 +130,11 @@ class HomeController extends AbstractController
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute('app_login');
+        }
+
+        if ($user->getVerified() != true) {
+            $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
+            return $this->redirectToRoute('user_edit_pw');
         }
         $article = $this->articleRepository->find($id);
 
@@ -148,19 +171,18 @@ class HomeController extends AbstractController
     /**
      * @Route("/calendrier", name="calendar_show", priority=1)
      */
-    public function calendar(BookingRepository $bookingRepository, Request $request, CalendarRepository $calendar): Response
+    public function calendar(Request $request, CalendarRepository $calendar): Response
     {
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        $events = $bookingRepository->findBy([], ['begin_at' => 'ASC']);
-        foreach ($events as $event) {
-            $categoryEvent = $event->getCategory();
-            $array = $categoryEvent->toArray();
-            $categories = array_reverse($array);
+        if ($user->getVerified() != true) {
+            $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
+            return $this->redirectToRoute('user_edit_pw');
         }
+
 
         $events = $calendar->findAll();
         $meetings = [];
@@ -206,41 +228,7 @@ class HomeController extends AbstractController
         return $this->render('home/calendar.html.twig',compact('events', 'form', 'searchResult', 'tagIndex', 'categories', 'data'));
     }
 
-    /**
-     * @Route("/csv", name="csv", priority=1)
-     */
-    public function csv(Request $request, CSVImportService $cSVImportService)
-    {
-        $user = $this->getUser();
-        // dd($user->getRoles());
-        if (!in_array("ROLE_ADMIN", $user->getRoles())) {
-            return $this->redirectToRoute('home');
-        }
-        $form = $this->createForm(CSVType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $fileName = $_FILES['csv']['name']['csv_file'];
-            $fileTMP = $_FILES['csv']['tmp_name']['csv_file'];
-
-            if (file_exists($fileName)) {
-                unlink($_FILES['csv']['name']['csv_file']);
-                move_uploaded_file($fileTMP, $fileName);
-            } else {
-                move_uploaded_file($fileTMP, $fileName);
-            }
-
-            $cSVImportService->getDataFromFile();
-            $cSVImportService->createUsers();
-
-            return $this->redirectToRoute('admin');
-        }
-
-        return $this->render("admin/csv_import.html.twig", [
-            'form' => $form->createView()
-        ]);
-    }
+    
 
     
 }

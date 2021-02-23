@@ -60,6 +60,7 @@ class UserController extends AbstractController
 
             if($encoder->isPasswordValid($user, $currentPw)){
                 $user->setPassword($newPw);
+                $user->setVerified(true);
                 $em->flush();
                 $this->addFlash('success', 'Mot de passe modifié avec succès');
                 return $this->redirectToRoute('user_profile');

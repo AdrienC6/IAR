@@ -1,12 +1,14 @@
-{% for role in app.user.roles %}
-	{% if role is same as ("ROLE_ADMIN") %}
-		<div class="admin-bar">
-			<a href="{{path('admin')}}" class="admin-bar-item">Dashboard</a>
-			<a href="{{path('app_logout')}}" class="admin-bar-item">Déconnexion</a>
-		</div>
+{% if app.user %}
+	{% for role in app.user.roles %}
+		{% if role is same as ("ROLE_ADMIN") %}
+			<div class="admin-bar">
+				<a href="{{path('admin')}}" class="admin-bar-item">Dashboard</a>
+				<a href="{{path('app_logout')}}" class="admin-bar-item">Déconnexion</a>
+			</div>
 
-	{% endif %}
-{% endfor %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
 
 <nav>
 	<div class="items">
