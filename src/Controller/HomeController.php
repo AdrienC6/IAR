@@ -2,14 +2,10 @@
 
 namespace App\Controller;
 
-use App\Form\CSVType;
 use App\Repository\TagRepository;
 use App\CustomServices\SearchService;
 use App\Repository\ArticleRepository;
-use App\Repository\BookingRepository;
 use App\Repository\CategoryRepository;
-use App\CustomServices\CSVImportService;
-use App\CustomServices\GetUserService;
 use App\Repository\CalendarRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-
+    protected $categoryRepository;
+    protected $tagRepository;
+    protected $articleRepository;
+    protected $searchService;
+    
     public function __construct(CategoryRepository $categoryRepository, TagRepository $tagRepository, ArticleRepository $articleRepository, SearchService $searchService)
     {
         $this->categoryRepository = $categoryRepository;
@@ -27,21 +27,21 @@ class HomeController extends AbstractController
         $this->articleRepository = $articleRepository;
         $this->searchService = $searchService;
     }
+
     /**
      * @Route("/", name="home")
      */
     public function index(): Response
     {
-        $user = $this->getUser();
+        $user = $this->getUser(); // Si user pas connecté -> redirection
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        if($user->getVerified()!= true){
+        if ($user->getVerified() != true) { // Si pas vérifié (= mdp changé) -> on force le changement de mdp
             $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
             return $this->redirectToRoute('user_edit_pw');
         }
-
 
         return $this->render('home/index.html.twig');
     }
@@ -51,12 +51,12 @@ class HomeController extends AbstractController
      */
     public function categoryShow($name, Request $request): Response
     {
-        $user = $this->getUser();
+        $user = $this->getUser(); // Si user pas connecté -> redirection
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        if ($user->getVerified() != true) {
+        if ($user->getVerified() != true) { // Si pas vérifié (= mdp changé) -> on force le changement de mdp
             $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
             return $this->redirectToRoute('user_edit_pw');
         }
@@ -65,14 +65,14 @@ class HomeController extends AbstractController
         if (!$category) {
             throw $this->createNotFoundException("La catégorie demandée n'existe pas..."); // Si pas trouvée
         }
-        $categoryArticles = $category->getArticles(); // Les articles de la catégorie
-        $array = $categoryArticles->toArray(); // On en fait un array
-        $articles = array_reverse($array); // On renverse l'array en DESC
+        
+        $articles = array_reverse($category->getArticles()->toArray()); // Les articles de la catégorie en array reverse
 
         $tags = $this->tagRepository->findAll(); // On trouve tous les tags
 
         $form = $this->searchService->search($request)['form'];
         $searchResult = $this->searchService->search($request)['searchResult'];
+        $eventsResult = $this->searchService->search($request)['eventsResult'];
 
         return $this->render('home/category_show.html.twig', [
             'category' => $category,
@@ -80,7 +80,7 @@ class HomeController extends AbstractController
             'tags' => $tags,
             'searchResult' => $searchResult,
             'form' => $form->createView(),
-
+            'eventsResult' => $eventsResult
         ]);
     }
 
@@ -89,12 +89,12 @@ class HomeController extends AbstractController
      */
     public function tagShow($name, Request $request): Response
     {
-        $user = $this->getUser();
+        $user = $this->getUser(); // Si user pas connecté -> redirection
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        if ($user->getVerified() != true) {
+        if ($user->getVerified() != true) { // Si pas vérifié (= mdp changé) -> on force le changement de mdp
             $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
             return $this->redirectToRoute('user_edit_pw');
         }
@@ -103,22 +103,21 @@ class HomeController extends AbstractController
         if (!$tag) {
             throw $this->createNotFoundException("L'étiquette demandée n'existe pas..."); // Si pas trouvé
         }
-        $tagArticles = $tag->getArticles(); // Articles du tag
-        $array = $tagArticles->toArray(); // On transforme en array
-        $articles = array_reverse($array); // On reverse en DESC
+        $articles = array_reverse($tag->getArticles()->toArray()); // Les articles du tag en array reverse
 
         $tags = $this->tagRepository->findAll(); // Tous les tags
 
         $form = $this->searchService->search($request)['form'];
         $searchResult = $this->searchService->search($request)['searchResult'];
-
+        $eventsResult = $this->searchService->search($request)['eventsResult'];
 
         return $this->render('home/tag_show.html.twig', [
             'tag' => $tag,
             'articles' => $articles,
             'tags' => $tags,
             'form' => $form->createView(),
-            'searchResult' => $searchResult
+            'searchResult' => $searchResult,
+            'eventsResult' => $eventsResult
         ]);
     }
 
@@ -127,35 +126,30 @@ class HomeController extends AbstractController
      */
     public function articleShow($id, Request $request): Response
     {
-        $user = $this->getUser();
+        $user = $this->getUser(); // Si user pas connecté -> redirection
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        if ($user->getVerified() != true) {
+        if ($user->getVerified() != true) { // Si pas vérifié (= mdp changé) -> on force le changement de mdp
             $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
             return $this->redirectToRoute('user_edit_pw');
         }
-        $article = $this->articleRepository->find($id);
+
+        $article = $this->articleRepository->find($id); 
 
         if (!$article) {
             throw $this->createNotFoundException("L'article demandé n'existe pas..."); // Si pas trouvé
         }
-
-        $tagsArticleAll = $article->getTag();
-        $array = $tagsArticleAll->toArray();
-        $tagsArticle = array_reverse($array);
-
-        $categoriesArticleAll = $article->getCategory();
-        $array2 = $categoriesArticleAll->toArray();
-        $categoriesArticle = array_reverse($array2);
-
+        
+        $tagsArticle = array_reverse($article->getTag()->toArray()); // Les tags de l'article en array reverse
+        $categoriesArticle = array_reverse($article->getCategory()->toArray()); // Les catégories de l'article en array reverse
         $articles = $this->articleRepository->findAll();
-
         $tagIndex = $this->tagRepository->findAll();
 
         $form = $this->searchService->search($request)['form'];
         $searchResult = $this->searchService->search($request)['searchResult'];
+        $eventsResult = $this->searchService->search($request)['eventsResult'];
 
         return $this->render('home/article_show.html.twig', [
             'article' => $article,
@@ -164,7 +158,8 @@ class HomeController extends AbstractController
             'searchResult' => $searchResult,
             'form' => $form->createView(),
             'articles' => $articles,
-            'tagIndex' => $tagIndex
+            'tagIndex' => $tagIndex,
+            'eventsResult'=>$eventsResult
         ]);
     }
 
@@ -173,37 +168,34 @@ class HomeController extends AbstractController
      */
     public function calendar(Request $request, CalendarRepository $calendar): Response
     {
-        $user = $this->getUser();
+        $user = $this->getUser(); // Si user pas connecté -> redirection
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        if ($user->getVerified() != true) {
+        if ($user->getVerified() != true) { // Si pas vérifié (= mdp changé) -> on force le changement de mdp
             $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
             return $this->redirectToRoute('user_edit_pw');
         }
 
-
         $events = $calendar->findAll();
         $meetings = [];
-        foreach ($events as $event) {
-            $categoriesEvent = $event->getCategories();
-            $array = $categoriesEvent->toArray();
-            $categories = array_reverse($array);
+
+        foreach ($events as $event) { 
+            $categories = array_reverse($event->getCategories()->toArray()); // On récupère les catégories de l'event en array reverse
             $categoriesArray = [];
-            foreach ($categories as $c) {
-                $categoriesArray[] = $c->getName();
-            }
-
-            $tagsEvent = $event->getTags();
-            $array = $tagsEvent->toArray();
-            $tags = array_reverse($array);
             $tagsArray = [];
-            foreach ($tags as $t) {
-                $tagsArray[] = $t->getName();
+
+            foreach ($categories as $c) {
+                $categoriesArray[] = $c->getName(); // On ajoute le nom de la catégorie
             }
 
-            $meetings[] = [
+            $tags = array_reverse($event->getTags()->toArray()); // On récupère les tags de la même façon
+            foreach ($tags as $t) {
+                $tagsArray[] = $t->getName(); // Puis on les ajoute
+            }
+
+            $meetings[] = [ // Ensemble des events avec leur propriétés à afficher dans le calendar js
                 'id' => $event->getId(),
                 'start' => $event->getStart()->format('Y-m-d H:i:s'),
                 'end' => $event->getEnd()->format('Y-m-d H:i:s'),
@@ -224,8 +216,10 @@ class HomeController extends AbstractController
 
         $form = $this->searchService->search($request)['form']->createView();
         $searchResult = $this->searchService->search($request)['searchResult'];
+        $eventsResult = $this->searchService->search($request)['eventsResult'];
 
-        return $this->render('home/calendar.html.twig',compact('events', 'form', 'searchResult', 'tagIndex', 'categories', 'data'));
+
+        return $this->render('home/calendar.html.twig',compact('events', 'form', 'searchResult', 'tagIndex', 'categories', 'data', 'eventsResult'));
     }
 
     

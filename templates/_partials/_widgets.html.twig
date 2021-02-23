@@ -7,7 +7,7 @@
 	</div>
 	<div class="search">
 		{% if searchResult | length > 0 %}
-			<h4 class="result-title">Résultat(s) de la recherche</h4>
+			<h4 class="result-title">Article(s) trouvé(s)</h4>
 			{% for article in searchResult %}
 				<div class="article-card">
 					<a href="{{path('article_show', {id: article.id})}}" class="result-title">{{article.title}}
@@ -16,8 +16,27 @@
 					</a>
 				</div>
 			{% endfor %}
-
 		{% endif %}
+
+		{% if eventsResult | length > 0 %}
+			<h4 class="result-title">Evènement(s) trouvé(s)</h4>
+			
+			{% for event in eventsResult %}
+				<div class="article-card">
+					<a href="{{path('calendar_show')}}" class="result-title">{{event.title}}
+						<span id="show">
+							Accès au calendrier</span>
+					</a>
+				</div>
+				<div >
+					<p id="description"></p>
+					<p>
+						<a href="{{event.url}}"></a>
+					</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+
 
 		<h4>Recherche</h4>
 		{{ form_start(form) }}

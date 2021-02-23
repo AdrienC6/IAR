@@ -17,7 +17,6 @@ class AdminController extends AbstractController
      */
     public function csv(Request $request, CSVImportService $cSVImportService)
     {
-       
         $form = $this->createForm(CSVType::class);
         $form->handleRequest($request);
 
@@ -43,5 +42,4 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
 }

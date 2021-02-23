@@ -19,6 +19,20 @@ class CalendarRepository extends ServiceEntityRepository
         parent::__construct($registry, Calendar::class);
     }
 
+    /**
+     * Recherche les articles par le formulaire
+     */
+    public function search($words)
+    {
+        $query = $this->createQueryBuilder('c');
+        if ($words != null) {
+            $query->where('MATCH_AGAINST(c.title, c.description) AGAINST (:words boolean)>0')
+            ->setParameter('words', $words);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Calendar[] Returns an array of Calendar objects
     //  */

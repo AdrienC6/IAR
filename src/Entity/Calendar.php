@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CalendarRepository::class)
+ * @ORM\Table(name="calendar", indexes={@ORM\Index(columns={"title", "description"}, flags={"fulltext"})})
  */
 class Calendar
 {
