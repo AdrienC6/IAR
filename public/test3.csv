@@ -1,4 +1,0 @@
-email,roles,firstName,lastName,password
-test@example.com,"[""ROLE_USER""]",Adrien,Chouteau,gircor
-test2@example.com,"[""ROLE_USER""]",Jean,Dupont,gircor
-test3@example.com,"[""ROLE_USER""]",Etienne,Jacques,gircor

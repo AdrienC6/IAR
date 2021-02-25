@@ -32,7 +32,7 @@ class CSVImportService extends AbstractController
 
     public function getDataFromFile(): array
     {
-        $file = $_FILES['csv']['name']['csv_file'];
+        $file = 'CSV/'.$_FILES['csv']['name']['csv_file'];
 
         $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
 
