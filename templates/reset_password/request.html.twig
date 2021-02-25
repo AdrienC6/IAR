@@ -1,0 +1,29 @@
+<head>
+	<title>Info-Activisme Recherche</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
+
+
+	<link rel="stylesheet" href="/CSS/login.css">
+</head>
+
+
+{% block body %}
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+        {{ form_start(requestForm) }}
+<h1>Réinitialiser mon mot de passe</h1>
+
+
+        <div class="item">
+            {{form_label(requestForm.email)}}
+            {{ form_widget(requestForm.email) }}
+        </div>
+
+        <div class="item">
+            <button id="button" type="submit">Envoyer</button>
+        </div>
+        {{ form_end(requestForm) }}
+{% endblock %}

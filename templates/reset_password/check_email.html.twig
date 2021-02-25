@@ -1,0 +1,23 @@
+<head>
+	<title>Info-Activisme Recherche</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
+
+
+	<link rel="stylesheet" href="/CSS/login.css">
+</head>
+
+
+{% block body %}
+	{% for flashError in app.flashes('reset_password_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+
+	<form action="">
+    <p style="text-align:center">Un e-mail contenant un lien de réinitialisation de votre mot de passe vient d'être envoyé à l'adresse saisie.</p>
+    <p style="text-align:center"> Si vous ne recevez pas cet e-mail, vérifiez votre dossiers spams.</p>
+    
+
+    
+    </form>
+{% endblock %}

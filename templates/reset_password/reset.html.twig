@@ -1,0 +1,21 @@
+<head>
+	<title>Info-Activisme Recherche</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
+	<link rel="stylesheet" href="/CSS/login.css">
+</head>
+
+
+{% block body %}
+
+    {{ form_start(resetForm) }}
+        <h1>Réinitialiser mon mot de passe</h1>
+        <div class="item item-reset">
+            {{form_label(resetForm.plainPassword)}}
+            {{ form_widget(resetForm.plainPassword) }}
+        </div>
+        <div class="item">
+            <button id="button">Valider</button>
+        </div>
+    {{ form_end(resetForm) }}
+{% endblock %}

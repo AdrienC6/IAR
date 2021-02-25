@@ -4,7 +4,7 @@
 	<link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
 
 
-	<link rel="stylesheet" href="CSS/login.css">
+	<link rel="stylesheet" href="/CSS/login.css">
 </head>
 {% block body %}
 	{% for rubrique, messages in app.flashes %}
@@ -39,7 +39,13 @@
 				<input type="submit" id="button" value="Connexion">
 			</div>
 
+			<div class="item">
+				<h6>
+					<a href="{{path('app_forgot_password_request')}}">Mot de passe oublié</a>
+				</h6>
+			</div>
+
 	</form>
 
-	<script src="JS/login.js"></script>
+	<script src="/JS/login.js"></script>
 {% endblock %}

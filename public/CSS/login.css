@@ -63,6 +63,7 @@ form .item #button {
   color: #fff;
   border: none;
   padding: 5px 0;
+  border-radius: 20px;
 }
 
 form .item #button:hover {
@@ -73,4 +74,9 @@ form .item #button:hover {
 
 form h1 {
   text-align: center;
+}
+
+.item-reset input {
+  width : 100%;
+  margin : 2% auto;
 }
