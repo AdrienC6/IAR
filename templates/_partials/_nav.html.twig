@@ -15,9 +15,6 @@
 		<div class="item">
 			<a href="{{path('home')}}">Accueil</a>
 		</div>
-		<div class="item">
-			<a href="">Editorial</a>
-		</div>
 		{% for c in categoryRepository.findAll() %}
 			<div class="item">
 				<a href="{{path('category_show', {name : c.name})}}">{{c.name}}</a>
@@ -43,8 +40,6 @@
 			</button>
 			<div class="dropdown-content">
 				<a href="{{path('home')}}">Accueil</a>
-
-				<a href="">Editorial</a>
 
 				{% for c in categoryRepository.findAll() %}
 					<a href="{{path('category_show', {name : c.name})}}">{{c.name}}</a>

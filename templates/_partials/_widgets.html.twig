@@ -1,6 +1,6 @@
 <div class="widgets">
 	<div class="index">
-		<h4>Index</h4>
+		<h4 class="widget-title">Index</h4>
 		{% for tag in tagIndex %}
 			<a href="{{path('tag_show', {name: tag.name})}}" class="tag-link">{{tag.name}}</a>
 		{% endfor %}
@@ -12,12 +12,13 @@
 				<div class="article-card">
 					<a href="{{path('article_show', {id: article.id})}}" class="result-title">{{article.title}}
 						<span>
-							{{article.createdAt|date('d/m/Y')}}</span>
+							Voir l'article</span>
 					</a>
 				</div>
 			{% endfor %}
 		{% endif %}
-
+	</div>
+	<div class="search">
 		{% if eventsResult | length > 0 %}
 			<h4 class="result-title">Evènement(s) trouvé(s)</h4>
 			
@@ -36,9 +37,10 @@
 				</div>
 			{% endfor %}
 		{% endif %}
+	</div>
+	<div class="search">
 
-
-		<h4>Recherche</h4>
+		<h4 class="widget-title">Recherche</h4>
 		{{ form_start(form) }}
 
 		<div class="form-item">
@@ -51,7 +53,7 @@
 		<div class="form-item">
 			{{ form_row(form.tag) }}
 		</div>
-		<button type="submit" , id="searchButton" formnovalidate>Envoyer</button>
+		<button type="submit" , id="searchButton" formnovalidate>Rechercher</button>
 
 		{{ form_end(form) }}
 
