@@ -60,6 +60,7 @@ class DashboardController extends AbstractDashboardController
                     ->setAction('index'),
                 MenuItem::linkToRoute('Import', 'fas fa-user-friends', 'csv')
             ]),
+            MenuItem::linkToRoute('Ajouter Archive', 'fas fa-file-pdf', 'pdf')
 
         ];
     }

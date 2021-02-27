@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\TagRepository;
 use App\CustomServices\SearchService;
+use App\Repository\ArchiveRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CalendarRepository;
@@ -222,7 +223,40 @@ class HomeController extends AbstractController
         return $this->render('home/calendar.html.twig',compact('events', 'form', 'searchResult', 'tagIndex', 'categories', 'data', 'eventsResult'));
     }
 
-    
+    /**
+     * @Route("/archives", name="archive_index")
+     */
+    public function archiveIndex(ArchiveRepository $archiveRepository, Request $request):Response
+    {
+        $user = $this->getUser(); // Si user pas connecté -> redirection
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($user->getVerified() != true) { // Si pas vérifié (= mdp changé) -> on force le changement de mdp
+            $this->addFlash('success', 'Vous devez changer votre mot de passe lors de votre première connexion. Pour rappel, votre mot de passe actuel est "gircor".');
+            return $this->redirectToRoute('user_edit_pw');
+        }
+
+        $archives = $archiveRepository->findAll();
+
+        $articles = $this->articleRepository->findAll();
+        $tagIndex = $this->tagRepository->findAll();
+
+        $form = $this->searchService->search($request)['form'];
+        $searchResult = $this->searchService->search($request)['searchResult'];
+        $eventsResult = $this->searchService->search($request)['eventsResult'];
+
+
+        return $this->render("home/archives.html.twig", [
+            'archives'=>$archives,
+            'articles' => $articles,
+            'tagIndex' => $tagIndex,
+            'searchResult'=>$searchResult,
+            'eventsResult'=>$eventsResult,
+            'form'=>$form->createView()
+        ]);
+    }
 
     
 }

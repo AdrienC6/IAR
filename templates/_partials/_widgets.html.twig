@@ -5,8 +5,10 @@
 			<a href="{{path('tag_show', {name: tag.name})}}" class="tag-link">{{tag.name}}</a>
 		{% endfor %}
 	</div>
-	<div class="search">
+
+
 		{% if searchResult | length > 0 %}
+		<div class="search">
 			<h4 class="result-title">Article(s) trouvé(s)</h4>
 			{% for article in searchResult %}
 				<div class="article-card">
@@ -16,12 +18,12 @@
 					</a>
 				</div>
 			{% endfor %}
+		</div>
 		{% endif %}
-	</div>
-	<div class="search">
+
 		{% if eventsResult | length > 0 %}
+		<div class="search">
 			<h4 class="result-title">Evènement(s) trouvé(s)</h4>
-			
 			{% for event in eventsResult %}
 				<div class="article-card">
 					<a href="{{path('calendar_show')}}" class="result-title">{{event.title}}
@@ -36,10 +38,10 @@
 					</p>
 				</div>
 			{% endfor %}
+		</div>
 		{% endif %}
-	</div>
-	<div class="search">
 
+	<div class="search">
 		<h4 class="widget-title">Recherche</h4>
 		{{ form_start(form) }}
 
@@ -56,7 +58,5 @@
 		<button type="submit" , id="searchButton" formnovalidate>Rechercher</button>
 
 		{{ form_end(form) }}
-
-
 	</div>
 </div>

@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    
+
+<div class="title">
+	<h1>Archives</h1>
+</div>
+
+<div class="full-article">
+
+	<div class="article-details">
+<select name="" id="yearSelector" value="2021">
+	<option value="2021">2021</option>
+	<option value="2020">2020</option>
+	<option value="2019">2019</option>
+	<option value="2018">2018</option>
+	<option value="2017">2017</option>
+</select>
+<button id="search">Rechercher</button>
+
+        {% for archive in archives %}
+            <a href="{{ asset('PDF/' ~ archive.pdfFileName) }}" data-year={{archive.year}} class="pdf-link" target="_blank"><img src="{{asset('/images/pdf.png')}}" alt="">{{archive.title}}</a>
+        {% endfor %}
+	</div>
+
+	{% include "_partials/_widgets.html.twig" %}
+
+
+</div>
+{% block javascripts %}
+{{ parent() }}
+<script src="/JS/archives.js">
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">
+	{% endblock %}
+
+{% endblock %}
