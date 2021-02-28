@@ -20,27 +20,50 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/csv", name="csv", priority=1)
      */
-    public function csv(Request $request, CSVImportService $cSVImportService) : Response
+    public function csv(Request $request, CSVImportService $cSVImportService, SluggerInterface $slugger) : Response
     {
         $form = $this->createForm(CSVType::class);
         $form->handleRequest($request);
 
+        // if ($form->isSubmitted() && $form->isValid()) {
+
+        //     $fileName = $_FILES['csv']['name']['csv_file'];
+        //     $fileTMP = $_FILES['csv']['tmp_name']['csv_file'];
+
+        //     if (file_exists('CSV/'.'users')) {
+        //         unlink('CSV/'.'users');
+        //         move_uploaded_file($fileTMP, 'CSV/'.'users');
+        //     } else {
+        //         move_uploaded_file($fileTMP, 'CSV/'.'users');
+        //     }
+
+        //     $cSVImportService->getDataFromFile();
+        //     $cSVImportService->createUsers();
+
+        //     return $this->redirectToRoute('admin');
+        // }
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $csvFile = $form->get('csv_file')->getData();
 
-            $fileName = $_FILES['csv']['name']['csv_file'];
-            $fileTMP = $_FILES['csv']['tmp_name']['csv_file'];
+            if ($csvFile) {
+                // $originalFilename = pathinfo($csvFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // $safeFilename = $slugger->slug($originalFilename);
+                // $newFileName = $safeFilename . '-' . uniqid() . '.' . $csvFile->guessExtension();
 
-            if (file_exists('CSV/'.'users')) {
-                unlink('CSV/'.'users');
-                move_uploaded_file($fileTMP, 'CSV/'.'users');
-            } else {
-                move_uploaded_file($fileTMP, 'CSV/'.'users');
+                try {
+                    $csvFile->move(
+                        $this->getParameter('csv_directory'),
+                        'users.csv'
+                    );
+                } catch (FileException $e) {
+                }
+
+                $cSVImportService->getDataFromFile();
+                $cSVImportService->createUsers();
+                
+                return $this->redirectToRoute('admin');
             }
-
-            $cSVImportService->getDataFromFile();
-            $cSVImportService->createUsers();
-
-            return $this->redirectToRoute('admin');
         }
 
         return $this->render("admin/csv_import.html.twig", [
@@ -59,15 +82,15 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()&&$form->isValid()){
-            $pdfFile = $form->get('pdfFileName')->getData();
+            $csvFile = $form->get('pdfFileName')->getData();
 
-            if($pdfFile){
-                $originalFilename = pathinfo($pdfFile->getClientOriginalName(), PATHINFO_FILENAME);
+            if($csvFile){
+                $originalFilename = pathinfo($csvFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFileName = $safeFilename.'-'.uniqid().'.'.$pdfFile->guessExtension();
+                $newFileName = $safeFilename.'-'.uniqid().'.'.$csvFile->guessExtension();
 
                 try {
-                    $pdfFile->move(
+                    $csvFile->move(
                         $this->getParameter('pdf_directory'),
                         $newFileName
                     );

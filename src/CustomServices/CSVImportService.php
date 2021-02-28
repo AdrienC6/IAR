@@ -33,7 +33,7 @@ class CSVImportService extends AbstractController
     public function getDataFromFile(): array
     {
         $file = 'CSV/users.csv';
-
+        
         $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
 
         $normalizers = [new ObjectNormalizer()];
