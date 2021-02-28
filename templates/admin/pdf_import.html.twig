@@ -9,31 +9,34 @@
 
 
 <div class="all">
+	<h1>Import Archive</h1>
 
-	{{ form_start(form) }}
-	<div class="item">
-		{{form_label(form.pdfFileName)}}
-		{{ form_widget(form.pdfFileName) }}
+	<div class="custom-form">
+		{{ form_start(form) }}
+		<div class="item">
+			{{form_label(form.pdfFileName)}}
+			{{ form_widget(form.pdfFileName) }}
+		</div>
+
+		<div class="item">
+			{{form_label(form.title)}}
+			{{ form_widget(form.title) }}
+		</div>
+
+
+		<div class="item">
+			{{form_label(form.year)}}
+			{{ form_widget(form.year) }}
+		</div>
+
+		<input type="submit" id="button" value="Importer">
+
+		<div class="item">
+			<a href="{{path('admin')}}">Dashboard</a>
+		</div>
+		{{ form_end(form) }}
+
 	</div>
-
-<div class="item">
-	{{form_label(form.title)}}
-	{{ form_widget(form.title) }}
-</div>
-
-
-<div class="item">
-	{{form_label(form.year)}}
-	{{ form_widget(form.year) }}
-</div>
-
-
-
-	<input type="submit" id="button" value="Importer">
-	<div class="item">
-	<a href="{{path('admin')}}">Dashboard</a>
-	</div>
-	{{ form_end(form) }}
 
 </div>
 

@@ -9,6 +9,17 @@ body {
     align-items: center;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+}
+
+.custom-form {
+    background : #fff;
+    padding : 15px;
+    border-radius : 10px;
+    box-shadow: 0 0 2px #9D9C94;
+    width : 80%;
+    display: flex;
+    justify-content: center;
 }
 
 form {
@@ -28,10 +39,21 @@ label {
 #button {
     margin : 5% auto;
     width : 100%;
-    background : #EC6436;
+    background : #6174d1;
     color : #fff;
     padding : 5px;
     border : none;
     outline : none;
     border-radius : 10px;
+}
+
+#button:hover {
+    cursor : pointer;
+}
+
+input {
+  border-radius: 20px;
+  border: 1px solid grey;
+  margin-top: 1%;
+  text-align: center;
 }

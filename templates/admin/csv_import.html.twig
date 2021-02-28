@@ -8,16 +8,20 @@
 </head>
 
 
+
 <div class="all">
+	<h1>Import Utilisateurs</h1>
 
+
+	<div class="custom-form">
 	{{ form_start(form) }}
-	<div class="item">
-		{{form_label(form.csv_file)}}
-		{{ form_widget(form.csv_file) }}
+		<div class="item">
+			{{form_label(form.csv_file)}}
+			{{ form_widget(form.csv_file) }}
 
-	</div>
-	<input type="submit" id="button" value="Importer l'archive">
-	<a href="{{path('admin')}}">Dashboard</a>
+		</div>
+		<input type="submit" id="button" value="Importer l'archive">
+		<a href="{{path('admin')}}">Dashboard</a>
 	{{ form_end(form) }}
-
+	</div>
 </div>

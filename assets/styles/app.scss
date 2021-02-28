@@ -36,7 +36,23 @@ body {
     a:hover {
         cursor: pointer;
     }
-
+    .mentions {
+        width : 80%;
+        background : #fff;
+        border-radius : 10px;
+        box-shadow : 0 0 2px #9D9C94;
+        margin : 1% auto;
+        color : #4C4C4C;
+        padding : 15px;
+        a {
+            color : #EC6436;
+            text-decoration: none;
+        }
+        p {
+            padding : 1%;
+            text-align: justify;
+        }
+    }
     nav {
         display : flex;
         flex-direction: row;
