@@ -22,7 +22,7 @@
 			<button id="search">Rechercher</button>
 
 			{% for archive in archives %}
-				<a href="{{ asset('PDF/' ~ archive.pdfFileName) }}" data-year={{archive.year}} class="pdf-link" target="_blank">
+				<a download="{{ asset('PDF/' ~ archive.pdfFileName) }}" data-year={{archive.year}} class="pdf-link" target="_blank">
 					<img src="{{asset('/images/pdf.png')}}" alt="">{{archive.title}}
 				</a>
 			{% endfor %}
