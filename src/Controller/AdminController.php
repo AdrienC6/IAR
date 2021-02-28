@@ -30,11 +30,11 @@ class AdminController extends AbstractController
             $fileName = $_FILES['csv']['name']['csv_file'];
             $fileTMP = $_FILES['csv']['tmp_name']['csv_file'];
 
-            if (file_exists('CSV/'.$fileName)) {
-                unlink('CSV/'.$fileName);
-                move_uploaded_file($fileTMP, 'CSV/'.$fileName);
+            if (file_exists('CSV/'.'users')) {
+                unlink('CSV/'.'users');
+                move_uploaded_file($fileTMP, 'CSV/'.'users');
             } else {
-                move_uploaded_file($fileTMP, 'CSV/'.$fileName);
+                move_uploaded_file($fileTMP, 'CSV/'.'users');
             }
 
             $cSVImportService->getDataFromFile();
