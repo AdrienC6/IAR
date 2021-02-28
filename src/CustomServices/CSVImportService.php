@@ -80,7 +80,7 @@ class CSVImportService extends AbstractController
                     $email = (new TemplatedEmail())
                         ->from('gircor@gircor.net')
                         ->to($row['email'])
-                        ->subject('Inscription sur le site Info-Activisme Recherche')
+                        ->subject('Inscription sur le site InfoActivisme-Recherche')
                         ->htmlTemplate('mails/subscribe.html.twig')
                         ->context([
                             'username'=>$row['email']

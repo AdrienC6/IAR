@@ -20,30 +20,6 @@ class UserController extends AbstractController
     {
         return $this->render("user/profile.html.twig");
     }
-    
-    
-    /**
-     * @Route("/profile/edit", name="user_profile_edit")
-     */
-    public function profileEdit(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
-    {
-        $user = $this->getUser();
-        
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted()&&$form->isValid()){
-            
-            $em->flush();
-            $this->addFlash('success', 'Modifications enregistrées');
-            return $this->redirectToRoute('user_profile');
-            
-        }
-
-        return $this->render('user/profile_edit.html.twig', [
-            'form'=>$form->createView()
-        ]);
-    }
 
     /**
      * @Route("/profile/editpw", name="user_edit_pw" )
@@ -63,7 +39,7 @@ class UserController extends AbstractController
                 $user->setVerified(true);
                 $em->flush();
                 $this->addFlash('success', 'Mot de passe modifié avec succès');
-                return $this->redirectToRoute('user_profile');
+                return $this->redirectToRoute('home');
             } else {
                 $this->addFlash('error', 'Le mot de passe saisi n\'est pas valide');
             }

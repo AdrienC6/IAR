@@ -36,6 +36,9 @@ body {
     a:hover {
         cursor: pointer;
     }
+    .noresult {
+        text-align : center;
+    }
     .mentions {
         width : 80%;
         background : #fff;
@@ -484,6 +487,34 @@ body {
         flex-direction: row;
         justify-content: space-evenly;
         width : 100%;
+        .archives-section{
+            background : #fff;
+            width : 55%;
+            margin : 2% auto;
+            padding : 15px;
+            box-shadow: 0 0 2px #9D9C94;
+            display : flex;
+            flex-direction: column;
+            border-radius : 10px;
+            @media screen and (max-width : 1200px){
+                width : 100%;
+            }
+            #yearSelector {
+                font-size : 16px;
+                font-weight : 600;
+            }
+            #search {
+                width : 50%;
+                margin : 2% auto; 
+                background : #EC6436;
+                color : #fff;
+                padding : 5px 0;
+                border : none;
+                border-radius : 5px;
+                font-weight : 600;
+
+            }
+        }
         .article-details{
             background : #fff;
             width : 55%;
@@ -496,16 +527,6 @@ body {
             border-radius : 10px;
             @media screen and (max-width : 1200px){
                 width : 100%;
-            }
-            #search {
-                width : 50%;
-                margin : 2% auto; 
-                background : #EC6436;
-                color : #fff;
-                padding : 5px 0;
-                border : none;
-                border-radius : 5px;
-
             }
             .article-date {
                 background : #EC6436;

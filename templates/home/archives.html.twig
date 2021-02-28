@@ -9,19 +9,25 @@
 
 <div class="full-article">
 
-	<div class="article-details">
-<select name="" id="yearSelector" value="2021">
-	<option value="2021">2021</option>
-	<option value="2020">2020</option>
-	<option value="2019">2019</option>
-	<option value="2018">2018</option>
-	<option value="2017">2017</option>
-</select>
-<button id="search">Rechercher</button>
+	<div class="archives-section">
+	<h2 class="noresult">Recherche par année</h2>
+		{% if archives | length < 100 %}
+			<select name="" id="yearSelector" value="2021">
+				<option value="2021">2021</option>
+				<option value="2020">2020</option>
+				<option value="2019">2019</option>
+				<option value="2018">2018</option>
+				<option value="2017">2017</option>
+			</select>
+			<button id="search">Rechercher</button>
 
-        {% for archive in archives %}
-            <a href="{{ asset('PDF/' ~ archive.pdfFileName) }}" data-year={{archive.year}} class="pdf-link" target="_blank"><img src="{{asset('/images/pdf.png')}}" alt="">{{archive.title}}</a>
-        {% endfor %}
+			{% for archive in archives %}
+				<a href="{{ asset('PDF/' ~ archive.pdfFileName) }}" data-year={{archive.year}} class="pdf-link" target="_blank">
+					<img src="{{asset('/images/pdf.png')}}" alt="">{{archive.title}}
+				</a>
+			{% endfor %}
+		{% else %} <h2 class="noresult">Aucune archive pour le moment</h2>
+		{% endif %}
 	</div>
 
 	{% include "_partials/_widgets.html.twig" %}

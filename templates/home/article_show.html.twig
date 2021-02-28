@@ -8,19 +8,7 @@
 <div class="full-article">
 
 	<div class="article-details">
-		<h2>
-			{% if article.id - 1 > 0 %}
-				<a href="{{path('article_show', {id: article.id -1})}}">Précédent
-				{% endif %}
-			</a>
-			{{article.title}}
-			{% if article.id + 1 <= articles| length %}
-				<a href="{{path('article_show', {id: article.id +1})}}">
-					Suivant
-
-				{% endif %}
-			</a>
-		</h2>
+		<h2>{{article.title}}</h2>
 
 		<p class="article-date">Publié le
 			{{article.createdAt| date('d/m/Y')}}</p>

@@ -39,18 +39,15 @@
         let calendar = new FullCalendar.Calendar(calendarElement, {
 
             initialView: 'dayGridMonth',
-            locale: 'fr',
+            locale: 'Fr',
             timeZone:'Europe/Paris',
             firstDay : 1,
-            buttonText : {
-                list : 'Aujourd\'hui',
-                dayGridMonth : 'Mois'
-            },
+            
 
             headerToolbar: {
-                start: 'list dayGridMonth',
+                start: 'prev',
                 center: 'title',
-                end: 'prev next'
+                end: 'next'
             },
             events: {{ data | raw }},
             

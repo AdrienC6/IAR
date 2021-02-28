@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Archive;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Entity\Article;
@@ -32,7 +33,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Info-Activisme Recherche')
+            ->setTitle('InfoActivisme-Recherche')
             ->setFaviconPath('/images/favicon.png')
             ->disableUrlSignatures();
     }
@@ -55,12 +56,14 @@ class DashboardController extends AbstractDashboardController
                 ->setPermission('ROLE_ADMIN'),
 
             MenuItem::subMenu('Membres', 'fas fa-users')->setSubItems([
-                MenuItem::linkToCrud('Membres', 'fas fa-user', User::class)
-                    ->setPermission('ROLE_ADMIN')
-                    ->setAction('index'),
+                MenuItem::linkToCrud('Membres', 'fas fa-user', User::class),
                 MenuItem::linkToRoute('Import', 'fas fa-user-friends', 'csv')
             ]),
-            MenuItem::linkToRoute('Ajouter Archive', 'fas fa-file-pdf', 'pdf')
+
+            MenuItem::subMenu('Archives', 'far fa-file')->setSubItems([
+                MenuItem::linkToCrud('Liste', 'fas fa-file-pdf', Archive::class),
+                MenuItem::linkToRoute('Import', 'far fa-file-pdf', 'pdf')
+            ]),
 
         ];
     }
